@@ -4643,4 +4643,16 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 290,
         .trainerOffset = 2,
     },
+
+        [NATIONAL_DEX_FARIGIRAF] =
+    {
+        .categoryName = _("LONG NECK"),
+        .height = 32,
+        .weight = 1600,
+        .description = gFarigirafPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 290,
+        .trainerOffset = 2,
+    },
 };

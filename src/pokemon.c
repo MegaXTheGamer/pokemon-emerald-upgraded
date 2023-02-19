@@ -509,6 +509,7 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(JIRACHI),
     SPECIES_TO_HOENN(DEOXYS),
     SPECIES_TO_HOENN(CHIMECHO),
+    SPECIES_TO_HOENN(FARIGIRAF),
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -925,6 +926,7 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(JIRACHI),
     SPECIES_TO_NATIONAL(DEOXYS),
     SPECIES_TO_NATIONAL(CHIMECHO),
+    SPECIES_TO_NATIONAL(FARIGIRAF),
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index
@@ -1316,6 +1318,7 @@ static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(LUGIA),
     HOENN_TO_NATIONAL(HO_OH),
     HOENN_TO_NATIONAL(CELEBI),
+    HOENN_TO_NATIONAL(FARIGIRAF),
     HOENN_TO_NATIONAL(OLD_UNOWN_B),
     HOENN_TO_NATIONAL(OLD_UNOWN_C),
     HOENN_TO_NATIONAL(OLD_UNOWN_D),
@@ -1782,6 +1785,7 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_JIRACHI - 1]     = ANIM_SWING_CONVEX,
     [SPECIES_DEOXYS - 1]      = ANIM_H_PIVOT,
     [SPECIES_CHIMECHO - 1]    = ANIM_H_SLIDE_WOBBLE,
+    [SPECIES_FARIGIRAF - 1]    = ANIM_H_VIBRATE,
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =
@@ -1840,7 +1844,8 @@ static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =
     [SPECIES_ABSOL - 1]      = 45,
     [SPECIES_SALAMENCE - 1]  = 70,
     [SPECIES_KYOGRE - 1]     = 60,
-    [SPECIES_RAYQUAZA - 1]   = 60,
+    [SPECIES_RAYQUAZA - 1]   = 20,
+    [SPECIES_FARIGIRAF - 1]   = 15,
 };
 
 #define PP_UP_SHIFTS(val)           val,        (val) << 2,        (val) << 4,        (val) << 6
@@ -3091,6 +3096,7 @@ void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
 }
 
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef)
+
 {
     u32 i;
     s32 damage = 0;
@@ -3155,15 +3161,13 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         spDefense = (110 * spDefense) / 100;
 
     // Apply type-bonus hold item
-    for (i = 0; i < ARRAY_COUNT(sHoldEffectToType); i++)
+ for (i = 0; i < ARRAY_COUNT(sHoldEffectToType); i++)
     {
         if (attackerHoldEffect == sHoldEffectToType[i][0]
             && type == sHoldEffectToType[i][1])
         {
-            if (IS_TYPE_PHYSICAL(type))
-                attack = (attack * (attackerHoldEffectParam + 100)) / 100;
-            else
-                spAttack = (spAttack * (attackerHoldEffectParam + 100)) / 100;
+            attack = (attack * (attackerHoldEffectParam + 100)) / 100;
+            spAttack = (spAttack * (attackerHoldEffectParam + 100)) / 100;
             break;
         }
     }
@@ -3188,7 +3192,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     // Apply abilities / field sports
     if (defender->ability == ABILITY_THICK_FAT && (type == TYPE_FIRE || type == TYPE_ICE))
-        spAttack /= 2;
+        gBattleMovePower /= 2;
     if (attacker->ability == ABILITY_HUSTLE)
         attack = (150 * attack) / 100;
     if (attacker->ability == ABILITY_PLUS && ABILITY_ON_FIELD2(ABILITY_MINUS))
@@ -3216,7 +3220,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (gBattleMoves[gCurrentMove].effect == EFFECT_EXPLOSION)
         defense /= 2;
 
-    if (IS_TYPE_PHYSICAL(type))
+    if IS_MOVE_PHYSICAL(gCurrentMove)
     {
         if (gCritMultiplier == 2)
         {
@@ -3271,7 +3275,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (type == TYPE_MYSTERY)
         damage = 0; // is ??? type. does 0 damage.
 
-    if (IS_TYPE_SPECIAL(type))
+    if IS_MOVE_SPECIAL(gCurrentMove)
     {
         if (gCritMultiplier == 2)
         {
@@ -3314,6 +3318,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
             damage /= 2;
 
+    }
+
         // Are effects of weather negated with cloud nine or air lock
         if (WEATHER_HAS_EFFECT2)
         {
@@ -3353,7 +3359,6 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         // Flash fire triggered
         if ((gBattleResources->flags->flags[battlerIdAtk] & RESOURCE_FLAG_FLASH_FIRE) && type == TYPE_FIRE)
             damage = (15 * damage) / 10;
-    }
 
     return damage + 2;
 }

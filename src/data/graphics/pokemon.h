@@ -2712,6 +2712,13 @@ const u32 gMonShinyPalette_Chimecho[] = INCBIN_U32("graphics/pokemon/chimecho/sh
 const u8 gMonIcon_Chimecho[] = INCBIN_U8("graphics/pokemon/chimecho/icon.4bpp");
 const u8 gMonFootprint_Chimecho[] = INCBIN_U8("graphics/pokemon/chimecho/footprint.1bpp");
 
+const u32 gMonStillFrontPic_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/front.4bpp.lz");
+const u32 gMonPalette_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/normal.gbapal.lz");
+const u32 gMonBackPic_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/back.4bpp.lz");
+const u32 gMonShinyPalette_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/shiny.gbapal.lz");
+const u8 gMonIcon_Farigiraf[] = INCBIN_U8("graphics/pokemon/farigiraf/icon.4bpp");
+const u8 gMonFootprint_Farigiraf[] = INCBIN_U8("graphics/pokemon/farigiraf/footprint.1bpp");
+
 const u32 gMonStillFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/front.4bpp.lz");
 const u32 gMonPalette_Egg[] = INCBIN_U32("graphics/pokemon/egg/normal.gbapal.lz");
 

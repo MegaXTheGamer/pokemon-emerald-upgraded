@@ -1222,6 +1222,12 @@ const u8 gGirafarigPokedexText[] = _(
     "its tail makes chewing and swallowing\n"
     "motions as if it were also eating.");
 
+const u8 gFarigirafPokedexText[] = _(
+    "The hardened head from the tail protects\n"
+    " the head of the main body as FARIGIRAF\n"
+    " whips its long neck around to headbutt \n"
+    "enemies.");
+
 const u8 gPinecoPokedexText[] = _(
     "A PINECO hangs from a tree branch and\n"
     "waits for prey. While eating, if it is\n"

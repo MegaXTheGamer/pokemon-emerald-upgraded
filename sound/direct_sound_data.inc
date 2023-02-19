@@ -1939,6 +1939,10 @@ Cry_Chimecho::
 	.incbin "sound/direct_sound_samples/cries/chimecho.bin"
 
 	.align 2
+Cry_Farigiraf::
+	.incbin "sound/direct_sound_samples/cries/girafarig.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 
