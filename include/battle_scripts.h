@@ -231,6 +231,8 @@ extern const u8 BattleScript_WeakArmorDefAnim[];
 extern const u8 BattleScript_WeakArmorActivatesSpeed[];
 extern const u8 BattleScript_WeakArmorSpeedAnim[];
 extern const u8 BattleScript_WeakArmorActivatesEnd[];
+extern const u8 BattleScript_ScreenCleanEffect[];
+extern const u8 BattleScript_JustifiedActivates[];
 
 
 #endif // GUARD_BATTLE_SCRIPTS_H

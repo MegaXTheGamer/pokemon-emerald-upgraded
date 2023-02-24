@@ -430,7 +430,9 @@ static const u8 sText_SpAtk2[] = _("SP. ATK");
 static const u8 sText_SpDef2[] = _("SP. DEF");
 static const u8 sText_Accuracy[] = _("accuracy");
 static const u8 sText_Evasiveness[] = _("evasiveness");
-static const u8 sWeakArmorEffects[] = _("WEAK ARMOR lowered {B_PLAYER_MON1_NAME}'s DEFENSE\nand raised it's SPEED sharply");
+static const u8 sWeakArmorEffects[] = _("WEAK ARMOR lowered {B_PLAYER_MON1_NAME}'s DEFENSE\nand raised it's SPEED sharply.");
+static const u8 sScreenCleanEffect[] = _("{B_PLAYER_MON1_NAME}'s SCREEN CLEAN broke the\nopposing {B_OPPONENT_MON1_NAME}'s screens.");
+static const u8 sText_JustifiedRaisedAtk[] = _("{B_ATK_PREFIX2}'s JUSTIFIED\nraised ATTACK!");
 
 const u8 * const gStatNamesTable[NUM_BATTLE_STATS] =
 {
@@ -887,6 +889,8 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_S
     [STRINGID_TRAINER1WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer1WinText,
     [STRINGID_TRAINER2WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer2WinText,
     [STRINGID_WEAKARMOREFFECTS - BATTLESTRINGS_TABLE_START] = sWeakArmorEffects,
+    [STRINGID_SCREENCLEANEFFECT - BATTLESTRINGS_TABLE_START] = sScreenCleanEffect,
+    [STRINGID_JUSTIFIEDRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_JustifiedRaisedAtk
 };
 
 const u16 gMissStringIds[] =

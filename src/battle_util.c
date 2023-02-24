@@ -287,6 +287,9 @@ void HandleAction_UseMove(void)
 
     if (gBattleMons[gBattlerAttacker].ability == ABILITY_PIXILATE && gBattleMoves[gCurrentMove].type == TYPE_NORMAL)
         *(&gBattleStruct->dynamicMoveType) = TYPE_FAIRY;
+    
+    if (gBattleMons[gBattlerAttacker].ability == ABILITY_SCRAPPY && (gBattleMoves[gCurrentMove].type == TYPE_NORMAL || TYPE_FIGHTING))
+        *(&gBattleStruct->dynamicMoveType) = TYPE_FORESIGHT;
 
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
         BattleArena_AddMindPoints(gBattlerAttacker);
@@ -2548,6 +2551,14 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     gSpecialStatuses[battler].intimidatedMon = 1;
                 }
                 break;
+            case ABILITY_SCREEN_CLEAN:
+                if (gSideStatuses[BATTLE_OPPOSITE(gBattlerAttacker)] & SIDE_STATUS_REFLECT 
+                 || gSideStatuses[BATTLE_OPPOSITE(gBattlerAttacker)] & SIDE_STATUS_LIGHTSCREEN)
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_ScreenCleanEffect);
+                    effect++;
+                }
+                break;
             case ABILITY_FORECAST:
                 effect = CastformDataTypeChange(battler);
                 if (effect != 0)
@@ -2853,6 +2864,21 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         gBattleScripting.animArg1 = 14 + STAT_SPEED;
                         gBattleScripting.animArg2 = 0;
                         BattleScriptPushCursorAndCallback(BattleScript_MotorDriveActivates);
+                        gBattleScripting.battler = gBattlerTarget;
+                        effect++;
+                    }
+                break;
+            case ABILITY_JUSTIFIED:
+                if (gBattleMons[gBattlerTarget].hp != 0
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+                 && gBattleMoves[gCurrentMove].type == TYPE_DARK
+                 && gBattleMons[gBattlerTarget].statStages[STAT_ATK] < MAX_STAT_STAGE 
+                 && gDisableStructs[gBattlerTarget].isFirstTurn != 2)
+                    {
+                        gBattleMons[gBattlerTarget].statStages[STAT_ATK]++;
+                        gBattleScripting.animArg1 = 14 + STAT_ATK;
+                        gBattleScripting.animArg2 = 0;
+                        BattleScriptPushCursorAndCallback(BattleScript_JustifiedActivates);
                         gBattleScripting.battler = gBattlerTarget;
                         effect++;
                     }

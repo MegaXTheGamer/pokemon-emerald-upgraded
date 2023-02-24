@@ -3975,6 +3975,12 @@ BattleScript_MotorDriveActivates::
 	waitmessage B_WAIT_TIME_LONG
 	end3
 
+BattleScript_JustifiedActivates::
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_JUSTIFIEDRAISEDATK
+	waitmessage B_WAIT_TIME_LONG
+	end3
+
 BattleScript_WeakArmorActivates::
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_WeakArmorActivatesSpeed
@@ -4003,6 +4009,11 @@ BattleScript_WeakArmorSpeedAnim:
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_WeakArmorActivatesEnd:
 	return
+
+BattleScript_ScreenCleanEffect::
+	removelightscreenreflect
+	printstring STRINGID_SCREENCLEANEFFECT
+	end3
 
 BattleScript_TraceActivates::
 	pause B_WAIT_TIME_SHORT
