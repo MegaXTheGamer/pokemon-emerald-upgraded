@@ -60,6 +60,7 @@ AI_CBM_CheckIfNegatesType:
 	if_equal ABILITY_FLASH_FIRE, CheckIfFlashFireCancelsFire
 	if_equal ABILITY_WONDER_GUARD, CheckIfWonderGuardCancelsMove
 	if_equal ABILITY_LEVITATE, CheckIfLevitateCancelsGroundMove
+	if_equal ABILITY_MOTOR_DRIVE, CheckIfMotorDriveCancelsElectric
 	goto AI_CheckBadMove_CheckSoundproof_
 
 CheckIfVoltAbsorbCancelsElectric:
@@ -84,6 +85,11 @@ CheckIfWonderGuardCancelsMove:
 CheckIfLevitateCancelsGroundMove:
 	get_curr_move_type
 	if_equal_ TYPE_GROUND, Score_Minus10
+
+CheckIfMotorDriveCancelsElectric:
+	get_curr_move_type
+	if_equal_ TYPE_ELECTRIC, Score_Minus12
+	goto AI_CheckBadMove_CheckSoundproof_
 AI_CheckBadMove_CheckSoundproof_:
 	get_how_powerful_move_is
 	if_equal MOVE_POWER_OTHER, AI_CheckBadMove_CheckSoundproof  @ Pointless check

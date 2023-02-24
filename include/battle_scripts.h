@@ -136,6 +136,7 @@ extern const u8 BattleScript_Recoil33End[];
 extern const u8 BattleScript_ItemSteal[];
 extern const u8 BattleScript_DrizzleActivates[];
 extern const u8 BattleScript_SpeedBoostActivates[];
+extern const u8 BattleScript_MotorDriveActivates[];
 extern const u8 BattleScript_TraceActivates[];
 extern const u8 BattleScript_RainDishActivates[];
 extern const u8 BattleScript_SandstreamActivates[];
@@ -151,6 +152,8 @@ extern const u8 BattleScript_SturdyPreventsOHKO[];
 extern const u8 BattleScript_DampStopsExplosion[];
 extern const u8 BattleScript_MoveHPDrain_PPLoss[];
 extern const u8 BattleScript_MoveHPDrain[];
+extern const u8 BattleScript_ElectricImmune_PPLoss[];
+extern const u8 BattleScript_ElectricImmune[];
 extern const u8 BattleScript_MonMadeMoveUseless_PPLoss[];
 extern const u8 BattleScript_MonMadeMoveUseless[];
 extern const u8 BattleScript_FlashFireBoost_PPLoss[];
@@ -223,5 +226,11 @@ extern const u8 BattleScript_ActionWatchesCarefully[];
 extern const u8 BattleScript_ActionGetNear[];
 extern const u8 BattleScript_ActionThrowPokeblock[];
 extern const u8 BattleScript_BallThrowEnd[];
+extern const u8 BattleScript_WeakArmorActivates[];
+extern const u8 BattleScript_WeakArmorDefAnim[];
+extern const u8 BattleScript_WeakArmorActivatesSpeed[];
+extern const u8 BattleScript_WeakArmorSpeedAnim[];
+extern const u8 BattleScript_WeakArmorActivatesEnd[];
+
 
 #endif // GUARD_BATTLE_SCRIPTS_H

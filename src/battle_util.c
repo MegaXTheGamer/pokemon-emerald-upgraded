@@ -285,6 +285,9 @@ void HandleAction_UseMove(void)
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
     }
 
+    if (gBattleMons[gBattlerAttacker].ability == ABILITY_PIXILATE && gBattleMoves[gCurrentMove].type == TYPE_NORMAL)
+        *(&gBattleStruct->dynamicMoveType) = TYPE_FAIRY;
+
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
         BattleArena_AddMindPoints(gBattlerAttacker);
 
@@ -2682,6 +2685,17 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         effect = 1;
                     }
                     break;
+                case ABILITY_MOTOR_DRIVE:
+                    if (moveType == TYPE_ELECTRIC && gBattleMoves[move].power != 0)
+                    {
+                        if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                            gBattlescriptCurrInstr = BattleScript_ElectricImmune;
+                        else
+                            gBattlescriptCurrInstr = BattleScript_ElectricImmune_PPLoss;
+
+                        effect = 1;
+                    }
+                    break;
                 case ABILITY_FLASH_FIRE:
                     if (moveType == TYPE_FIRE && !(gBattleMons[battler].status1 & STATUS1_FREEZE))
                     {
@@ -2708,23 +2722,6 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         }
                     }
                     break;
-                }
-                if (effect == 1)
-                {
-                    if (gBattleMons[battler].maxHP == gBattleMons[battler].hp)
-                    {
-                        if ((gProtectStructs[gBattlerAttacker].notFirstStrike))
-                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
-                        else
-                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
-                    }
-                    else
-                    {
-                        gBattleMoveDamage = gBattleMons[battler].maxHP / 4;
-                        if (gBattleMoveDamage == 0)
-                            gBattleMoveDamage = 1;
-                        gBattleMoveDamage *= -1;
-                    }
                 }
             }
             break;
@@ -2760,6 +2757,22 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     gBattlescriptCurrInstr = BattleScript_RoughSkinActivates;
                     effect++;
                 }
+                break;
+            case ABILITY_WEAK_ARMOR:
+                if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                 && gBattleMons[gBattlerAttacker].hp != 0
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+                 && TARGET_TURN_DAMAGED
+                 && (gBattleMoves[move].flags & FLAG_MAKES_CONTACT)
+                 && gBattleMons[gBattlerTarget].statStages[STAT_SPEED] < MAX_STAT_STAGE 
+                 && gDisableStructs[gBattlerTarget].isFirstTurn != 2
+                 && gBattleMons[gBattlerTarget].statStages[STAT_DEF] > MIN_STAT_STAGE 
+                 && gDisableStructs[gBattlerTarget].isFirstTurn != 2)
+                    {
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_WeakArmorActivates;
+                    effect++;
+                    }
                 break;
             case ABILITY_EFFECT_SPORE:
                 if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
@@ -2828,6 +2841,21 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     gHitMarker |= HITMARKER_IGNORE_SAFEGUARD;
                     effect++;
                 }
+                break;
+            case ABILITY_MOTOR_DRIVE:
+                if (gBattleMons[gBattlerTarget].hp != 0
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+                 && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC
+                 && gBattleMons[gBattlerTarget].statStages[STAT_SPEED] < MAX_STAT_STAGE 
+                 && gDisableStructs[gBattlerTarget].isFirstTurn != 2)
+                    {
+                        gBattleMons[gBattlerTarget].statStages[STAT_SPEED]++;
+                        gBattleScripting.animArg1 = 14 + STAT_SPEED;
+                        gBattleScripting.animArg2 = 0;
+                        BattleScriptPushCursorAndCallback(BattleScript_MotorDriveActivates);
+                        gBattleScripting.battler = gBattlerTarget;
+                        effect++;
+                    }
                 break;
             case ABILITY_CUTE_CHARM:
                 if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
