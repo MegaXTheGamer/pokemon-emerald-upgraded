@@ -1684,6 +1684,11 @@ static void Cmd_adjustnormaldamage(void)
 
     gPotentialItemEffectBattler = gBattlerTarget;
 
+    if (gBattleMons[gEffectBattler].ability == ABILITY_TINTED_LENS && gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE)
+    {
+    gBattleMoveDamage = (200 * gBattleMoveDamage) / 100;
+    }
+
     if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);

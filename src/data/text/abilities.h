@@ -92,7 +92,7 @@ static const u8 sDefiantDescription[] = _("Lowered stat raises ATK.");
 static const u8 sScreenCleanDescription[] = _("Negates screens.");
 static const u8 sMoxieDescription[] = _("Each KO raised ATK.");
 static const u8 sAdaptabilityDescription[] = _("Same type moves are strong.");
-static const u8 sTintedLensDescription[] = _("No moves aren't very effective.");
+static const u8 sTintedLensDescription[] = _("Boosts bad typed moves");
 static const u8 sJustifiedDescription[] = _("DARK moves raise ATK.");
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =

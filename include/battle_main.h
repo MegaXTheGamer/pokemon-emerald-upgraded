@@ -48,10 +48,10 @@ ballShakesArray: 76543210
 #define TYPE_EFFECT_MULTIPLIER(i)((gTypeEffectiveness[i + 2]))
 
 // defines for the gTypeEffectiveness multipliers
-#define TYPE_MUL_NO_EFFECT          0
-#define TYPE_MUL_NOT_EFFECTIVE      5
-#define TYPE_MUL_NORMAL             10
-#define TYPE_MUL_SUPER_EFFECTIVE    20
+#define TYPE_MUL_NO_EFFECT                      0
+#define TYPE_MUL_NOT_EFFECTIVE                  5
+#define TYPE_MUL_NORMAL                         10
+#define TYPE_MUL_SUPER_EFFECTIVE                20
 
 // special type table Ids
 #define TYPE_FORESIGHT  0xFE
