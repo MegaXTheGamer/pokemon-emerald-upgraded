@@ -432,7 +432,9 @@ static const u8 sText_Accuracy[] = _("accuracy");
 static const u8 sText_Evasiveness[] = _("evasiveness");
 static const u8 sWeakArmorEffects[] = _("WEAK ARMOR lowered {B_PLAYER_MON1_NAME}'s DEFENSE\nand raised it's SPEED sharply.");
 static const u8 sScreenCleanEffect[] = _("{B_PLAYER_MON1_NAME}'s SCREEN CLEAN broke the\nopposing {B_OPPONENT_MON1_NAME}'s screens.");
-static const u8 sText_JustifiedRaisedAtk[] = _("{B_ATK_PREFIX2}'s JUSTIFIED\nraised ATTACK!");
+static const u8 sText_JustifiedRaisedAtk[] = _("{B_PLAYER_MON1_NAME}'s JUSTIFIED\nraised ATTACK!");
+static const u8 sText_SteadfastRaisedAtk[] = _("{B_PLAYER_MON1_NAME}'s STEADFAST\nraised ATTACK!");
+static const u8 sText_LeafGuardStatusSave[] = _("{B_PLAYER_MON1_NAME}'s LEAF GUARD\ncured it's status problems.");
 
 const u8 * const gStatNamesTable[NUM_BATTLE_STATS] =
 {
@@ -890,7 +892,9 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_S
     [STRINGID_TRAINER2WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer2WinText,
     [STRINGID_WEAKARMOREFFECTS - BATTLESTRINGS_TABLE_START] = sWeakArmorEffects,
     [STRINGID_SCREENCLEANEFFECT - BATTLESTRINGS_TABLE_START] = sScreenCleanEffect,
-    [STRINGID_JUSTIFIEDRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_JustifiedRaisedAtk
+    [STRINGID_JUSTIFIEDRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_JustifiedRaisedAtk,
+    [STRINGID_STEADFASTRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_SteadfastRaisedAtk,
+    [STRINGID_LEAFGUARDSAVE - BATTLESTRINGS_TABLE_START] = sText_LeafGuardStatusSave,
 };
 
 const u16 gMissStringIds[] =

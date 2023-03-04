@@ -381,8 +381,10 @@
 #define STRINGID_WEAKARMOREFFECTS           381
 #define STRINGID_SCREENCLEANEFFECT          382
 #define STRINGID_JUSTIFIEDRAISEDATK         383
+#define STRINGID_STEADFASTRAISEDATK         384
+#define STRINGID_LEAFGUARDSAVE              385
 
-#define BATTLESTRINGS_COUNT                 384
+#define BATTLESTRINGS_COUNT                 386
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,

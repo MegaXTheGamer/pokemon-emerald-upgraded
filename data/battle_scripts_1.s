@@ -3981,6 +3981,15 @@ BattleScript_JustifiedActivates::
 	waitmessage B_WAIT_TIME_LONG
 	end3
 
+BattleScript_SteadfastActivates::
+	printstring STRINGID_PKMNFLINCHED
+	setstatchanger STAT_SPEED, 1, FALSE
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_STEADFASTRAISEDATK
+	waitmessage B_WAIT_TIME_LONG
+	end3
+
 BattleScript_WeakArmorActivates::
 	setstatchanger STAT_DEF, 1, TRUE
 	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_WeakArmorActivatesSpeed

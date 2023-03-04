@@ -2613,6 +2613,19 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         effect++;
                     }
                     break;
+                case ABILITY_ICE_BODY:
+                    if (WEATHER_HAS_EFFECT && (gBattleWeather & B_WEATHER_HAIL)
+                     && gBattleMons[battler].maxHP > gBattleMons[battler].hp)
+                    {
+                        gLastUsedAbility = ABILITY_ICE_BODY;
+                        BattleScriptPushCursorAndCallback(BattleScript_RainDishActivates);
+                        gBattleMoveDamage = gBattleMons[battler].maxHP / 16;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        gBattleMoveDamage *= -1;
+                        effect++;
+                    }
+                    break;
                 case ABILITY_SHED_SKIN:
                     if ((gBattleMons[battler].status1 & STATUS1_ANY) && (Random() % 3) == 0)
                     {
@@ -2661,6 +2674,16 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         break;
                 }
                 if (sSoundMovesTable[i] != SOUND_MOVES_END)
+                {
+                    if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)
+                        gHitMarker |= HITMARKER_NO_PPDEDUCT;
+                    gBattlescriptCurrInstr = BattleScript_SoundproofProtected;
+                    effect = 1;
+                }
+            }
+            if (gLastUsedAbility == ABILITY_ARMOR_TAIL)
+            {
+                if (gBattleMoves[move].priority != 0 )
                 {
                     if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)
                         gHitMarker |= HITMARKER_NO_PPDEDUCT;
@@ -2945,6 +2968,14 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     if (gBattleMons[battler].status1 & STATUS1_BURN)
                     {
                         StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
+                        effect = 1;
+                    }
+                    break;
+                case ABILITY_LEAF_GUARD:
+                    if (gBattleWeather & B_WEATHER_SUN &&
+                        (gBattleMons[battler].status1 & (STATUS1_POISON | STATUS1_TOXIC_POISON | STATUS1_TOXIC_COUNTER | STATUS1_BURN | STATUS1_SLEEP | STATUS1_PARALYSIS | STATUS1_FREEZE)))
+                    {
+                        StringCopy(gBattleTextBuff1, gStatusConditionString_StatusJpn);
                         effect = 1;
                     }
                     break;

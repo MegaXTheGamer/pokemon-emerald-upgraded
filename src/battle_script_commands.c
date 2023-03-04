@@ -1157,6 +1157,8 @@ static void Cmd_accuracycheck(void)
             calc = (calc * 130) / 100; // 1.3 compound eyes boost
         if (WEATHER_HAS_EFFECT && gBattleMons[gBattlerTarget].ability == ABILITY_SAND_VEIL && gBattleWeather & B_WEATHER_SANDSTORM)
             calc = (calc * 80) / 100; // 1.2 sand veil loss
+        if (WEATHER_HAS_EFFECT && gBattleMons[gBattlerTarget].ability == ABILITY_SNOW_CLOAK && gBattleWeather & B_WEATHER_HAIL)
+            calc = (calc * 80) / 100; // 1.2 snowcloak loss
         if (gBattleMons[gBattlerAttacker].ability == ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move))
             calc = (calc * 80) / 100; // 1.2 hustle loss
 
@@ -2552,7 +2554,20 @@ void SetMoveEffect(bool8 primary, u8 certain)
                         gBattleMons[gEffectBattler].status2 |= sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]];
                     gBattlescriptCurrInstr++;
                 }
+
+                if ( gBattleMons[gEffectBattler].ability == ABILITY_STEADFAST 
+                 && gBattleMons[gBattlerTarget].statStages[STAT_SPEED] < MAX_STAT_STAGE
+                 )
+                {
+                        gBattlescriptCurrInstr =BattleScript_SteadfastActivates;
+                        gBattleScripting.battler = gBattlerTarget;
+                }
+                else 
+                {
+                        gBattlescriptCurrInstr++;
+                }
                 break;
+
             case MOVE_EFFECT_UPROAR:
                 if (!(gBattleMons[gEffectBattler].status2 & STATUS2_UPROAR))
                 {
