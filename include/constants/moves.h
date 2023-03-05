@@ -356,8 +356,18 @@
 #define MOVE_WATER_PULSE 352
 #define MOVE_DOOM_DESIRE 353
 #define MOVE_PSYCHO_BOOST 354
+#define MOVE_ROCK_WRECKER 355
+#define MOVE_HYPER_DRILL 356
+#define MOVE_METEOR_ASSAULT 357
+#define MOVE_TWIN_BEAM 358
+#define MOVE_OBSTRUCT 359
+#define MOVE_RAGE_FIST 360
+#define MOVE_BARB_BARRAGE 361
+#define MOVE_STONE_AXE 362
+#define MOVE_DIRE_CLAW 363
+#define MOVE_PSYSHIELD_BASH 364
 
-#define MOVES_COUNT 355
+#define MOVES_COUNT 365
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

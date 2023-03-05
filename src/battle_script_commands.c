@@ -312,7 +312,7 @@ static void Cmd_settypebasedhalvers(void);
 static void Cmd_setweatherballtype(void);
 static void Cmd_tryrecycleitem(void);
 static void Cmd_settypetoterrain(void);
-static void Cmd_pursuitdoubles(void);
+static void Cmd_ragefistdamagecalculation(void);
 static void Cmd_snatchsetbattlers(void);
 static void Cmd_removelightscreenreflect(void);
 static void Cmd_handleballthrow(void);
@@ -565,7 +565,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_setweatherballtype,                      //0xE9
     Cmd_tryrecycleitem,                          //0xEA
     Cmd_settypetoterrain,                        //0xEB
-    Cmd_pursuitdoubles,                          //0xEC
+    Cmd_ragefistdamagecalculation,               //0xEC
     Cmd_snatchsetbattlers,                       //0xED
     Cmd_removelightscreenreflect,                //0xEE
     Cmd_handleballthrow,                         //0xEF
@@ -8509,6 +8509,57 @@ static void Cmd_rolloutdamagecalculation(void)
     }
 }
 
+static void Cmd_ragefistdamagecalculation(void)
+{
+
+        s32 i;
+    
+    gDynamicBasePower = gBattleMoves[gCurrentMove].power;
+
+        if ((gBattleMons[gBattlerAttacker].maxHP >= gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.9*gBattleMons[gBattlerAttacker].maxHP)) //From 100% HP to 90% HP
+        {
+            gDynamicBasePower *= 1;
+        }
+        if ((0.9*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.8*gBattleMons[gBattlerAttacker].maxHP)) //From 90% HP to 80% HP
+        {
+            gDynamicBasePower *= 1.5;
+        }
+        if ((0.8*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.7*gBattleMons[gBattlerAttacker].maxHP)) //From 80% HP to 70% HP
+        {
+            gDynamicBasePower *= 2;
+        }
+        if ((0.7*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.6*gBattleMons[gBattlerAttacker].maxHP)) //From 70% HP to 60% HP
+        {
+            gDynamicBasePower *= 2.5;
+        }
+        if ((0.6*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.5*gBattleMons[gBattlerAttacker].maxHP)) //From 60% HP to 50% HP
+        {
+            gDynamicBasePower *= 3;
+        }
+        if ((0.5*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.4*gBattleMons[gBattlerAttacker].maxHP)) //From 50% HP to 40% HP
+        {
+            gDynamicBasePower *= 3.5;
+        }
+        if ((0.4*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.3*gBattleMons[gBattlerAttacker].maxHP)) //From 40% HP to 30% HP
+        {
+            gDynamicBasePower *= 4;
+        }
+        if ((0.3*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.2*gBattleMons[gBattlerAttacker].maxHP)) //From 30% HP to 20% HP
+        {
+            gDynamicBasePower *= 4.5;
+        }
+        if ((0.2*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp >= 0.1*gBattleMons[gBattlerAttacker].maxHP)) //From 20% HP to 10% HP
+        {
+            gDynamicBasePower *= 5;
+        }
+        if ((0.1*gBattleMons[gBattlerAttacker].maxHP > gBattleMons[gBattlerAttacker].hp && gBattleMons[gBattlerAttacker].hp > 0)) //From 10% HP to 1% HP
+        {
+            gDynamicBasePower *= 5.5;
+        }
+
+        gBattlescriptCurrInstr++;
+}
+
 static void Cmd_jumpifconfusedandstatmaxed(void)
 {
     if (gBattleMons[gBattlerTarget].status2 & STATUS2_CONFUSION
@@ -9761,29 +9812,6 @@ static void Cmd_settypetoterrain(void)
         PREPARE_TYPE_BUFFER(gBattleTextBuff1, sTerrainToType[gBattleTerrain]);
 
         gBattlescriptCurrInstr += 5;
-    }
-    else
-    {
-        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
-    }
-}
-
-// Unused
-static void Cmd_pursuitdoubles(void)
-{
-    gActiveBattler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
-
-    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
-        && !(gAbsentBattlerFlags & gBitTable[gActiveBattler])
-        && gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_MOVE
-        && gChosenMoveByBattler[gActiveBattler] == MOVE_PURSUIT)
-    {
-        gActionsByTurnOrder[gActiveBattler] = B_ACTION_TRY_FINISH;
-        gCurrentMove = MOVE_PURSUIT;
-        gBattlescriptCurrInstr += 5;
-        gBattleScripting.animTurn = 1;
-        gBattleScripting.pursuitDoublesAttacker = gBattlerAttacker;
-        gBattlerAttacker = gActiveBattler;
     }
     else
     {

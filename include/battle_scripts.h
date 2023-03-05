@@ -234,5 +234,12 @@ extern const u8 BattleScript_WeakArmorActivatesEnd[];
 extern const u8 BattleScript_ScreenCleanEffect[];
 extern const u8 BattleScript_JustifiedActivates[];
 extern const u8 BattleScript_SteadfastActivates[];
+extern const u8 BattleScript_ActivateMoxie[];
+extern const u8 BattleScript_EffectRageFist[];
+extern const u8 BattleScript_EffectTwinBeam[];
+extern const u8 BattleScript_EffectBarbbarrage[];
+extern const u8 BattleScript_EffectTwinBeam[];
+extern const u8 BattleScript_BarbbarrageDoubleDmg[];
+extern const u8 BattleScript_EffectSplinters[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

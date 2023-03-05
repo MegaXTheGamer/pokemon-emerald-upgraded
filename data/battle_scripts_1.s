@@ -232,7 +232,10 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectCalmMind               @ EFFECT_CALM_MIND
 	.4byte BattleScript_EffectDragonDance            @ EFFECT_DRAGON_DANCE
 	.4byte BattleScript_EffectCamouflage             @ EFFECT_CAMOUFLAGE
-
+	.4byte BattleScript_EffectRageFist             	 @ EFFECT_RAGE_FIST
+	.4byte BattleScript_EffectTwinBeam               @ EFFECT_TWIN_BEAM
+	.4byte BattleScript_EffectBarbbarrage            @ EFFECT_BARB_BARRAGE
+	.4byte BattleScript_EffectSplinters              @ EFFECT_SPLINTERS
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -1531,6 +1534,7 @@ BattleScript_DoGhostCurse::
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectProtect::
+
 BattleScript_EffectEndure::
 	attackcanceler
 	attackstring
@@ -2821,6 +2825,16 @@ BattleScript_FaintTarget::
 	dofaintanimation BS_TARGET
 	cleareffectsonfaint BS_TARGET
 	printstring STRINGID_TARGETFAINTED
+	jumpifability BS_ATTACKER ABILITY_MOXIE BattleScript_ActivateMoxie
+	return
+
+BattleScript_ActivateMoxie::
+	setstatchanger STAT_ATK, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR, BattleScript_MoveEnd
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_MoveEnd
+	playanimation BS_ATTACKER, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_MOXIERAISEDATK
+	waitmessage B_WAIT_TIME_LONG
 	return
 
 BattleScript_GiveExp::
@@ -3792,7 +3806,7 @@ BattleScript_SteadfastActivates::
 	printstring STRINGID_STEADFASTRAISEDATK
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
-	
+
 BattleScript_PrintUproarOverTurns::
 	printfromtable gUproarOverTurnStringIds
 	waitmessage B_WAIT_TIME_LONG
@@ -4628,3 +4642,39 @@ BattleScript_PrintPlayerForfeitedLinkBattle::
 	endlinkbattle
 	waitmessage B_WAIT_TIME_LONG
 	end2
+
+BattleScript_EffectRageFist::
+	ragefistdamagecalculation
+	goto BattleScript_EffectHit
+
+BattleScript_EffectTwinBeam::
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	setbyte sMULTIHIT_EFFECT, MOVE_EFFECT_CONFUSION
+	attackstring
+	ppreduce
+	setmultihitcounter 2
+	initmultihitstring
+	goto BattleScript_MultiHitLoop
+
+BattleScript_EffectBarbbarrage::
+	jumpifstatus BS_TARGET, STATUS1_PARALYSIS, BattleScript_BarbbarrageDoubleDmg
+	jumpifstatus BS_TARGET, STATUS1_POISON, BattleScript_BarbbarrageDoubleDmg
+	jumpifstatus BS_TARGET, STATUS1_TOXIC_POISON, BattleScript_BarbbarrageDoubleDmg
+	jumpifstatus BS_TARGET, STATUS1_BURN, BattleScript_BarbbarrageDoubleDmg
+	goto BattleScript_EffectHit
+BattleScript_BarbbarrageDoubleDmg:
+	setbyte sDMG_MULTIPLIER, 2
+	goto BattleScript_EffectHit
+
+BattleScript_EffectSplinters::
+	attackcanceler
+	trysetspikes BattleScript_ButItFailedAtkStringPpReduce
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_SPIKESSCATTERED
+	waitmessage B_WAIT_TIME_LONG
+	
+	goto BattleScript_EffectHit

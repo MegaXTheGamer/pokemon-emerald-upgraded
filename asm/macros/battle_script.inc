@@ -1197,9 +1197,8 @@
 	.4byte \ptr
 	.endm
 
-	.macro pursuitdoubles ptr:req
+	.macro ragefistdamagecalculation
 	.byte 0xec
-	.4byte \ptr
 	.endm
 
 	.macro snatchsetbattlers
