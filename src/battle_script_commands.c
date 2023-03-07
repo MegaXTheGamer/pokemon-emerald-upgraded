@@ -667,6 +667,7 @@ static const u8 *const sMoveEffectBS_Ptrs[] =
     [MOVE_EFFECT_REMOVE_PARALYSIS] = BattleScript_MoveEffectSleep,
     [MOVE_EFFECT_ATK_DEF_DOWN]     = BattleScript_MoveEffectSleep,
     [MOVE_EFFECT_RECOIL_33]        = BattleScript_MoveEffectRecoil,
+    [MOVE_EFFECT_DEF_SP_DEF_PLUS_1]= BattleScript_MoveEffectSleep,
 };
 
 static const struct WindowTemplate sUnusedWinTemplate =
@@ -2636,6 +2637,15 @@ void SetMoveEffect(bool8 primary, u8 certain)
                     }
                 }
                 break;
+            case MOVE_EFFECT_DIRE_CLAW:
+                if (!gBattleMons[gEffectBattler].status1)
+                {
+                    static const u8 sDireClawEffects[] = { MOVE_EFFECT_POISON, MOVE_EFFECT_PARALYSIS, MOVE_EFFECT_SLEEP };
+                    gBattleCommunication[MOVE_EFFECT_BYTE] = sDireClawEffects[Random() % 3];
+                    SetMoveEffect(TRUE, 0);
+                }
+                break;
+
             case MOVE_EFFECT_RECOIL_25: // 25% recoil
                 gBattleMoveDamage = (gHpDealt) / 4;
                 if (gBattleMoveDamage == 0)
@@ -2843,6 +2853,11 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 BattleScriptPush(gBattlescriptCurrInstr + 1);
                 gBattlescriptCurrInstr = BattleScript_AtkDefDown;
                 break;
+            case MOVE_EFFECT_DEF_SP_DEF_PLUS_1: //Psycho Bash
+                BattleScriptPush(gBattlescriptCurrInstr + 1);
+                gBattlescriptCurrInstr = BattleScript_DefSpDUp;
+                break;
+
             case MOVE_EFFECT_RECOIL_33: // Double Edge
                 gBattleMoveDamage = gHpDealt / 3;
                 if (gBattleMoveDamage == 0)

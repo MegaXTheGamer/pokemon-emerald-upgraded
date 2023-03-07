@@ -1417,6 +1417,47 @@ static const u8 sPsychoBoostDescription[] = _(
     "Allows a full-power attack,\n"
     "but sharply lowers SP. ATK.");
 
+static const u8 sRockWreckerDescription[] = _(
+    "Spins body at high speed\n"
+    "and goes through protect.");
+
+static const u8 sHyperDrillDescription[] = _(
+    "Launches a huge boulder but\n"
+    "it requires a turn to rest.");
+
+static const u8 sMeteorFrenzyDescription[] = _(
+    "Attacks wildly with leek\n"
+    "but requires a rest turn.");
+
+static const u8 sTwinBeamDescription[] = _(
+    "Shoots mystical eye beams\n"
+    "and hits twice in a row.");
+
+static const u8 sObstructDescription[] = _(
+    "Obstructs opponents attacks\n"
+    "and protects the user.");
+
+static const u8 sRageFistDescription[] = _(
+    "Hits user for more damage\n"
+    "the lower its HP is.");
+
+static const u8 sBarbBarrageDescription[] = _(
+    "Launches Toxic Barbs and if\n"
+    "poisoned, it doubles in damage.");
+
+static const u8 sStoneAxeDescription[] = _(
+    "Swings stone axes at targets\n"
+    "and leaves behind splinters.");
+
+static const u8 sDireClawDescription[] = _(
+    "Lashes out with long claws\n"
+    "and can PSN, SLP, or PRLZ.");
+
+static const u8 sPsychoBashDescription[] = _(
+    "Cloaks in energy and bashes\n"
+    "target raising DEF and SpD.");
+
+    
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1774,4 +1815,14 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_WATER_PULSE - 1] = sWaterPulseDescription,
     [MOVE_DOOM_DESIRE - 1] = sDoomDesireDescription,
     [MOVE_PSYCHO_BOOST - 1] = sPsychoBoostDescription,
+    [MOVE_ROCK_WRECKER - 1] = sRockWreckerDescription,
+    [MOVE_HYPER_DRILL - 1] = sHyperDrillDescription,
+    [MOVE_METEOR_ASSAULT - 1] = sMeteorFrenzyDescription,
+    [MOVE_TWIN_BEAM - 1] = sTwinBeamDescription,
+    [MOVE_OBSTRUCT - 1] = sObstructDescription,
+    [MOVE_RAGE_FIST - 1] = sRageFistDescription,
+    [MOVE_BARB_BARRAGE - 1] = sBarbBarrageDescription,
+    [MOVE_STONE_AXE - 1] = sStoneAxeDescription,
+    [MOVE_DIRE_CLAW - 1] = sDireClawDescription,
+    [MOVE_PSYSHIELD_BASH - 1] = sPsychoBashDescription,
 };

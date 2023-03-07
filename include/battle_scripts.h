@@ -241,5 +241,10 @@ extern const u8 BattleScript_EffectBarbbarrage[];
 extern const u8 BattleScript_EffectTwinBeam[];
 extern const u8 BattleScript_BarbbarrageDoubleDmg[];
 extern const u8 BattleScript_EffectSplinters[];
+extern const u8 BattleScript_EffectDireClaw[];
+extern const u8 BattleScript_EffectPsyshieldBash[];
+extern const u8 BattleScript_DefSpDUp[];
+extern const u8 BattleScript_DefSpDUp_TryDef[];
+extern const u8 BattleScript_DefSpDUp_End[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

@@ -236,6 +236,8 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectTwinBeam               @ EFFECT_TWIN_BEAM
 	.4byte BattleScript_EffectBarbbarrage            @ EFFECT_BARB_BARRAGE
 	.4byte BattleScript_EffectSplinters              @ EFFECT_SPLINTERS
+	.4byte BattleScript_EffectDireClaw               @ EFFECT_DIRE_CLAW
+	.4byte BattleScript_EffectPsyshieldBash          @ EFFECT_PSYSHIELD_BASH
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -4676,5 +4678,30 @@ BattleScript_EffectSplinters::
 	waitanimation
 	printstring STRINGID_SPIKESSCATTERED
 	waitmessage B_WAIT_TIME_LONG
-	
 	goto BattleScript_EffectHit
+
+BattleScript_EffectDireClaw::
+	setmoveeffect MOVE_EFFECT_DIRE_CLAW
+	goto BattleScript_EffectHit
+
+BattleScript_EffectPsyshieldBash::
+	setmoveeffect MOVE_EFFECT_DEF_SP_DEF_PLUS_1 | MOVE_EFFECT_AFFECTS_USER
+	goto BattleScript_EffectHit
+
+BattleScript_DefSpDUp::
+	setbyte sSTAT_ANIM_PLAYED, FALSE
+	playstatchangeanimation BS_ATTACKER, BIT_DEF, 0
+	setstatchanger STAT_DEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_DefSpDUp_TryDef
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_DefSpDUp_TryDef
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_DefSpDUp_TryDef::
+	playstatchangeanimation BS_ATTACKER, BIT_SPDEF, 0
+	setstatchanger STAT_SPDEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN | STAT_CHANGE_ALLOW_PTR, BattleScript_DefSpDUp_End
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_DefSpDUp_End
+	printfromtable gStatDownStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_DefSpDUp_End::
+	return

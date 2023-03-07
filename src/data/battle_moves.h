@@ -5082,4 +5082,32 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .category= MOVE_CATEGORY_PHYSICAL,
     },
 
+        [MOVE_DIRE_CLAW] =
+    {
+        .effect = EFFECT_DIRE_CLAW,
+        .power = 80,
+        .type = TYPE_POISON,
+        .accuracy = 100,
+        .pp = 15,
+        .secondaryEffectChance = 50,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .category= MOVE_CATEGORY_PHYSICAL,
+    },
+
+        [MOVE_PSYSHIELD_BASH] =
+    {
+        .effect = EFFECT_PSYSHIELD_BASH,
+        .power = 70,
+        .type = TYPE_PSYCHIC,
+        .accuracy = 90,
+        .pp = 10,
+        .secondaryEffectChance = 100,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .category= MOVE_CATEGORY_PHYSICAL,
+    },
+
 };
