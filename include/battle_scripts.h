@@ -246,5 +246,7 @@ extern const u8 BattleScript_EffectPsyshieldBash[];
 extern const u8 BattleScript_DefSpDUp[];
 extern const u8 BattleScript_DefSpDUp_TryDef[];
 extern const u8 BattleScript_DefSpDUp_End[];
+extern const u8 BattleScript_ItemHurtRet[];
+extern const u8 BattleScript_ItemHurtEnd2[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

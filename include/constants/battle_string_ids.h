@@ -383,8 +383,9 @@
 #define STRINGID_JUSTIFIEDRAISEDATK         383
 #define STRINGID_STEADFASTRAISEDATK         384
 #define STRINGID_MOXIERAISEDATK             385
+#define STRINGID_HURTBYITEM                 386
 
-#define BATTLESTRINGS_COUNT                 386
+#define BATTLESTRINGS_COUNT                 387
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,

@@ -435,6 +435,7 @@ static const u8 sScreenCleanEffect[] = _("{B_PLAYER_MON1_NAME}'s SCREEN CLEAN br
 static const u8 sText_JustifiedRaisedAtk[] = _("{B_PLAYER_MON1_NAME}'s JUSTIFIED\nraised ATTACK!");
 static const u8 sText_SteadfastRaisedAtk[] = _("{B_PLAYER_MON1_NAME}'s STEADFAST\nraised SPEED!");
 static const u8 sText_MoxieRaisedAtk[] = _("{B_PLAYER_MON1_NAME}'s MOXIE\nraised ATTACK!");
+static const s8 sText_HurtByItem[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby its {B_LAST_ITEM}!");
 
 const u8 * const gStatNamesTable[NUM_BATTLE_STATS] =
 {
@@ -895,6 +896,7 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_S
     [STRINGID_JUSTIFIEDRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_JustifiedRaisedAtk,
     [STRINGID_STEADFASTRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_SteadfastRaisedAtk,
     [STRINGID_MOXIERAISEDATK - BATTLESTRINGS_TABLE_START] = sText_MoxieRaisedAtk,
+    [STRINGID_HURTBYITEM - BATTLESTRINGS_TABLE_START] = sText_HurtByItem,
 };
 
 const u16 gMissStringIds[] =

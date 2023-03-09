@@ -4705,3 +4705,17 @@ BattleScript_DefSpDUp_TryDef::
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DefSpDUp_End::
 	return
+
+BattleScript_ItemHurtRet::
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_HURTBYITEM
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_ATTACKER
+	return
+BattleScript_ItemHurtEnd2::
+	playanimation BS_ATTACKER, B_ANIM_MON_HIT
+	waitanimation
+	call BattleScript_ItemHurtRet
+	end2

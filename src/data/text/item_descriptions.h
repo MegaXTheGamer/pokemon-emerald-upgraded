@@ -1549,3 +1549,73 @@ static const u8 sOldSeaMapDesc[] = _(
     "A faded sea chart\n"
     "that shows the way\n"
     "to a certain island.");
+
+static const u8 sDawnStoneDesc[] = _(
+    "Makes certain\n"
+    "species of Pokémon\n"
+    "evolve.");
+
+static const u8 sShinyStoneDesc[] = _(
+    "Makes certain\n"
+    "species of Pokémon\n"
+    "evolve.");
+
+static const u8 sDuskStoneDesc[] = _(
+    "Makes certain\n"
+    "species of Pokémon\n"
+    "evolve.");
+
+static const u8 sIceStoneDesc[] = _(
+    "Makes certain\n"
+    "species of Pokémon\n"
+    "evolve.");
+
+static const u8 sReaperClothDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. Imbued with\n"
+    "spiritual energy.");
+
+static const u8 sElectirizerDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. It's full\n"
+    "of electric energy.");
+
+static const u8 sMagmarizerDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. It's full\n"
+    "of magma energy.");
+
+static const u8 sRazorFangDesc[] = _(
+    "A hold item that\n"
+    "may cause flinching\n"
+    "when the foe is hit.");
+
+static const u8 sRazorClawDesc[] = _(
+    "A hooked claw that\n"
+    "ups the holder's\n"
+    "critical-hit ratio.");
+
+static const u8 sDubiousDiscDesc[] = _(
+    "A transparent device\n"
+    "overflowing with\n"
+    "dubious data.");
+
+static const u8 sProtectorDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. It's stiff\n"
+    "and heavy.");
+
+static const u8 sBlackSludgeDesc[] = _(
+    "Gradually restores\n"
+    "HP of Poison-types.\n"
+    "Damages others.");
+
+static const u8 sBlackArguriteDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. It's dark\n"
+    "and very sharp.");
+
+static const u8 sPeatBlockDesc[] = _(
+    "Loved by a certain\n"
+    "Pokémon. It's moist\n"
+    "and very dirty.");

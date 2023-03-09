@@ -1225,6 +1225,50 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
     },
 
+        [ITEM_DAWN_STONE] =
+    {
+        .name = _("DAWN STONE"),
+        .itemId = ITEM_DAWN_STONE,
+        .price = 2100,
+        .description = sDawnStoneDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+        [ITEM_DUSK_STONE] =
+    {
+        .name = _("DUSK STONE"),
+        .itemId = ITEM_DUSK_STONE,
+        .price = 2100,
+        .description = sDuskStoneDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+        [ITEM_SHINY_STONE] =
+    {
+        .name = _("SHINY STONE"),
+        .itemId = ITEM_SHINY_STONE,
+        .price = 2100,
+        .description = sShinyStoneDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+        [ITEM_ICE_STONE] =
+    {
+        .name = _("ICE STONE"),
+        .itemId = ITEM_ICE_STONE,
+        .price = 2100,
+        .description = sIceStoneDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
     [ITEM_063] =
     {
         .name = _("????????"),
@@ -2772,6 +2816,126 @@ const struct Item gItems[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    },
+
+    [ITEM_REAPER_CLOTH] =
+    {
+        .name = _("REAPER CLOTH"),
+        .itemId = ITEM_REAPER_CLOTH,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_REAPER_CLOTH,
+        .description = sReaperClothDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_ELECTIRIZER] =
+    {
+        .name = _("ELECTIRIZER"),
+        .itemId = ITEM_ELECTIRIZER,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_ELECTIRIZER,
+        .description = sElectirizerDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_MAGMARIZER] =
+    {
+        .name = _("MAGMARIZER"),
+        .itemId = ITEM_MAGMARIZER,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_MAGMARIZER,
+        .description = sMagmarizerDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_RAZOR_FANG] =
+    {
+        .name = _("RAZOR FANG"),
+        .itemId = ITEM_RAZOR_FANG,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_FLINCH,
+        .description = sRazorFangDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_RAZOR_CLAW] =
+    {
+        .name = _("RAZOR CLAW"),
+        .itemId = ITEM_RAZOR_CLAW,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_SCOPE_LENS,
+        .description = sRazorClawDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_DUBIOUS_DISC] =
+    {
+        .name = _("DUBIOUS DISC"),
+        .itemId = ITEM_DUBIOUS_DISC,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_DUBIOUS_DISC,
+        .description = sDubiousDiscDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_PROTECTOR] =
+    {
+        .name = _("PROTECTOR"),
+        .itemId = ITEM_PROTECTOR,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_PROTECTOR,
+        .description = sProtectorDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_PEAT_BLOCK] =
+    {
+        .name = _("PEAT BLOCK"),
+        .itemId = ITEM_PEAT_BLOCK,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_PEAT_BLOCK,
+        .description = sPeatBlockDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_BLACK_AUGURITE] =
+    {
+        .name = _("AUGURITE"),
+        .itemId = ITEM_BLACK_AUGURITE,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_BLACK_ARGURITE,
+        .description = sBlackArguriteDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+    },
+
+    [ITEM_BLACK_SLUDGE] =
+    {
+        .name = _("BLACK SLUDGE"),
+        .itemId = ITEM_BLACK_SLUDGE,
+        .price = 2100,
+        .holdEffect = HOLD_EFFECT_BLACK_SLUDGE,
+        .description = sBlackSludgeDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
     },
 
     [ITEM_0E2] =
