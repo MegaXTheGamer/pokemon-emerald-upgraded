@@ -2012,9 +2012,6 @@ Cry_Yanmega::
 Cry_Cursola::
 	.incbin "sound/direct_sound_samples/cries/cursola.bin"
  	.align 2
-Cry_Sneasler::
-	.incbin "sound/direct_sound_samples/cries/sneasler.bin"
- 	.align 2
 Cry_Sirfetchd::
 	.incbin "sound/direct_sound_samples/cries/sirfetchd.bin"
  	.align 2
