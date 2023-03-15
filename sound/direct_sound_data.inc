@@ -2037,6 +2037,22 @@ Cry_Munchlax::
 	.incbin "sound/direct_sound_samples/cries/munchlax.bin"
 
 	.align 2
+Cry_Kleavor::
+	.incbin "sound/direct_sound_samples/cries/scizor.bin"
+
+	.align 2
+Cry_Ursaluna::
+	.incbin "sound/direct_sound_samples/cries/ursaring.bin"
+
+	.align 2
+Cry_Sneasler::
+	.incbin "sound/direct_sound_samples/cries/weavile.bin"
+
+	.align 2
+Cry_Wyrdeer::
+	.incbin "sound/direct_sound_samples/cries/stantler.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 

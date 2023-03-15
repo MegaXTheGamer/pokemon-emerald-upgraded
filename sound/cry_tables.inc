@@ -397,7 +397,6 @@ gCryTable::
     cry Cry_Glaceon
     cry Cry_Gliscor
     cry Cry_Honchkrow
-    cry Cry_Kleavor
     cry Cry_Leafeon
     cry Cry_Lickilicky
     cry Cry_Magmortar
@@ -410,12 +409,9 @@ gCryTable::
     cry Cry_Sylveon
     cry Cry_Tangrowth
     cry Cry_Togekiss
-    cry Cry_Ursaluna
     cry Cry_Weavile
-    cry Cry_Wyrdeer
     cry Cry_Yanmega
     cry Cry_Cursola
-    cry Cry_Sneasler
     cry Cry_Sirfetchd
     cry Cry_Bonsly
     cry Cry_Budew
@@ -826,7 +822,6 @@ gCryTable_Reverse::
     cry_reverse Cry_Glaceon
     cry_reverse Cry_Gliscor
     cry_reverse Cry_Honchkrow
-    cry_reverse Cry_Kleavor
     cry_reverse Cry_Leafeon
     cry_reverse Cry_Lickilicky
     cry_reverse Cry_Magmortar
@@ -839,12 +834,9 @@ gCryTable_Reverse::
     cry_reverse Cry_Sylveon
     cry_reverse Cry_Tangrowth
     cry_reverse Cry_Togekiss
-    cry_reverse Cry_Ursaluna
     cry_reverse Cry_Weavile
-    cry_reverse Cry_Wyrdeer
     cry_reverse Cry_Yanmega
     cry_reverse Cry_Cursola
-    cry_reverse Cry_Sneasler
     cry_reverse Cry_Sirfetchd
     cry_reverse Cry_Bonsly
     cry_reverse Cry_Budew
