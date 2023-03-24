@@ -4925,6 +4925,56 @@ static const union AnimCmd sAnim_Munchlax_1[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_Roserade_1[] =
+{
+    ANIMCMD_FRAME(1, 20),
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Annihilape_1[] =
+{
+    ANIMCMD_FRAME(1, 20),
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_DudunsparceTwo_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_DudunsparceThree_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Clodsire_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_MrRime_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Overqwil_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Obstagoon_1[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_Egg_1[] =
 {
     ANIMCMD_FRAME(0, 6),
@@ -5602,6 +5652,14 @@ SINGLE_ANIMATION(Happiny);
 SINGLE_ANIMATION(Mantyke);
 SINGLE_ANIMATION(MimeJr);
 SINGLE_ANIMATION(Munchlax); 
+SINGLE_ANIMATION(Roserade); 
+SINGLE_ANIMATION(Annihilape); 
+SINGLE_ANIMATION(DudunsparceTwo); 
+SINGLE_ANIMATION(DudunsparceThree); 
+SINGLE_ANIMATION(Clodsire); 
+SINGLE_ANIMATION(MrRime); 
+SINGLE_ANIMATION(Overqwil); 
+SINGLE_ANIMATION(Obstagoon); 
 SINGLE_ANIMATION(Egg);
 SINGLE_ANIMATION(UnownB);
 SINGLE_ANIMATION(UnownC);
@@ -6081,6 +6139,15 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [SPECIES_MANTYKE]   = sAnims_Mantyke,
     [SPECIES_MIME_JR]   = sAnims_MimeJr,
     [SPECIES_MUNCHLAX]   = sAnims_Munchlax,
+    [SPECIES_ROSERADE]   = sAnims_Roserade,
+    [SPECIES_ANNIHILAPE]   = sAnims_Annihilape,
+    [SPECIES_DUDUNSPARCE_TWO]   = sAnims_DudunsparceTwo,
+    [SPECIES_DUDUNSPARCE_THREE]   = sAnims_DudunsparceThree,
+    [SPECIES_CLODSIRE]   = sAnims_Clodsire,
+    [SPECIES_MR_RIME]   = sAnims_MrRime,
+    [SPECIES_OVERQWIL]   = sAnims_Overqwil,
+    [SPECIES_OBSTAGOON]   = sAnims_Obstagoon,
+
 
     [SPECIES_EGG]         = sAnims_Egg,
     [SPECIES_UNOWN_B]     = sAnims_UnownB,

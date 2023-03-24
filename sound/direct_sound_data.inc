@@ -2053,6 +2053,38 @@ Cry_Wyrdeer::
 	.incbin "sound/direct_sound_samples/cries/stantler.bin"
 
 	.align 2
+Cry_Roserade::
+	.incbin "sound/direct_sound_samples/cries/roserade.bin"
+
+	.align 2
+Cry_Annihilape::
+	.incbin "sound/direct_sound_samples/cries/primeape.bin"
+
+	.align 2
+Cry_Dudunsparce_Two::
+	.incbin "sound/direct_sound_samples/cries/dunsparce.bin"
+
+	.align 2
+Cry_Dudunsparce_Three::
+	.incbin "sound/direct_sound_samples/cries/dunsparce.bin"
+
+	.align 2
+Cry_Clodsire::
+	.incbin "sound/direct_sound_samples/cries/quagsire.bin"
+
+	.align 2
+Cry_Mr_Rime::
+	.incbin "sound/direct_sound_samples/cries/mr_rime.bin"
+
+	.align 2
+Cry_Overqwil::
+	.incbin "sound/direct_sound_samples/cries/qwilfish.bin"
+
+	.align 2
+Cry_Obstagoon::
+	.incbin "sound/direct_sound_samples/cries/obstagoon.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 

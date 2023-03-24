@@ -448,4 +448,13 @@ const u16 *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_MANTYKE] = sMantykeLevelUpLearnset,
     [SPECIES_MIME_JR] = sMimeJrLevelUpLearnset,
     [SPECIES_MUNCHLAX] = sMunchlaxLevelUpLearnset,
+    [SPECIES_ROSERADE] = sRoseradeLevelUpLearnset,
+    [SPECIES_ANNIHILAPE] = sAnnihilapeLevelUpLearnset,
+    [SPECIES_DUDUNSPARCE_TWO] = sDudunsparceTwoLevelUpLearnset,
+    [SPECIES_DUDUNSPARCE_THREE] = sDudunsparceThreeLevelUpLearnset,
+    [SPECIES_CLODSIRE] = sClodsireLevelUpLearnset,
+    [SPECIES_MR_RIME] = sMrRimeLevelUpLearnset,
+    [SPECIES_OVERQWIL] = sOverqwilLevelUpLearnset,
+    [SPECIES_OBSTAGOON] = sObstagoonLevelUpLearnset,
+
 };

@@ -428,7 +428,14 @@ const u32 gMonFrontPic_Happiny[] = INCBIN_U32("graphics/pokemon/happiny/anim_fro
 const u32 gMonFrontPic_Mantyke[] = INCBIN_U32("graphics/pokemon/mantyke/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Mimejr[] = INCBIN_U32("graphics/pokemon/mimejr/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Munchlax[] = INCBIN_U32("graphics/pokemon/munchlax/anim_front.4bpp.lz");
-
+const u32 gMonFrontPic_Roserade[] = INCBIN_U32("graphics/pokemon/roserade/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Annihilape[] = INCBIN_U32("graphics/pokemon/annihilape/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Dudunsparce_Two[] = INCBIN_U32("graphics/pokemon/dudunsparce_two/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Dudunsparce_Three[] = INCBIN_U32("graphics/pokemon/dudunsparce_three/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Clodsire[] = INCBIN_U32("graphics/pokemon/clodsire/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Mr_Rime[] = INCBIN_U32("graphics/pokemon/mr_rime/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Overqwil[] = INCBIN_U32("graphics/pokemon/overqwil/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Obstagoon[] = INCBIN_U32("graphics/pokemon/obstagoon/anim_front.4bpp.lz");
 
 const u32 gMonFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/anim_front.4bpp.lz");
 

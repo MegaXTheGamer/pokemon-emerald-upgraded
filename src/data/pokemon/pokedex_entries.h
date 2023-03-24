@@ -5075,4 +5075,101 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
+    [NATIONAL_DEX_ROSERADE] =
+    {
+        .categoryName = _("Bouquet"),
+        .height = 9,
+        .weight = 145,
+        .description = gRoseradePokedexText,
+        .pokemonScale = 338,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_ANNIHILAPE] =
+    {
+        .categoryName = _("Rage Monkey"),
+        .height = 12,
+        .weight = 560,
+        .description = gAnnihilapePokedexText,
+        .pokemonScale = 338,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_DUDUNSPARCE_TWO] =
+    {
+        .categoryName = _("Land Snake"),
+        .height = 36,
+        .weight = 392,
+        .description = gDudunsparceTwoPokedexText,
+        .pokemonScale = 338,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_DUDUNSPARCE_THREE] =
+    {
+        .categoryName = _("Land Snake"),
+        .height = 45,
+        .weight = 474,
+        .description = gDudunsparceThreePokedexText,
+        .pokemonScale = 338,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_CLODSIRE] =
+    {
+        .categoryName = _("Spiny Fish"),
+        .height = 18,
+        .weight = 2230,
+        .description = gClodsirePokedexText,
+        .pokemonScale = 268,
+        .pokemonOffset = 2,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_MR_RIME] =
+    {
+        .categoryName = _("Comedian"),
+        .height = 15,
+        .weight = 582,
+        .description = gMrRimePokedexText,
+        .pokemonScale = 268,
+        .pokemonOffset = 2,
+        .trainerScale = 271,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_OVERQWIL] =
+    {
+        .categoryName = _("Pin Cluster"),
+        .height = 25,
+        .weight = 605,
+        .description = gOverqwilPokedexText,
+        .pokemonScale = 257,
+        .pokemonOffset = 10,
+        .trainerScale = 423,
+        .trainerOffset = 8,
+    },
+
+    [NATIONAL_DEX_OBSTAGOON] =
+    {
+        .categoryName = _("Blocking"),
+        .height = 16,
+        .weight = 460,
+        .description = gObstagoonPokedexText,
+        .pokemonScale = 259,
+        .pokemonOffset = 1,
+        .trainerScale = 296,
+        .trainerOffset = 1,
+    },
+
 };

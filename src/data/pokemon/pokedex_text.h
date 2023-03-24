@@ -2535,3 +2535,50 @@ const u8 gMunchlaxPokedexText[] = _(
     "it might be edible, it goes right ahead\n"
     "and swallows it whole. That's why it gets\n"
     "fatter day by day.");
+
+const u8 gRoseradePokedexText[] = _(
+    "Its sweet aroma attracts prey.\n"
+    "With the movements of a dancer,\n"
+    "it strikes with whips that are densely\n"
+    "lined with poison thorns.");
+
+const u8 gAnnihilapePokedexText[] = _(
+    "When its anger rose beyond a critical\n"
+    "point, this Pokémon gained power that\n"
+    "is unfettered by the limits of its \n"
+    "physical body.");
+
+const u8 gDudunsparceTwoPokedexText[] = _(
+    "When its anger rose beyond a critical\n"
+    "point, this Pokémon gained power that\n"
+    "is unfettered by the limits of its \n"
+    "physical body.");
+
+const u8 gDudunsparceThreePokedexText[] = _(
+    "This Pokémon uses its hard tail to\n"
+    "make its nest by boring holes into\n"
+    "bedrock deep underground. The \n"
+    "nest can reach lengths of six miles.");
+
+const u8 gClodsirePokedexText[] = _(
+    "When attacked, this Pokémon will\n"
+    "retaliate by sticking thick spines\n"
+    "out from its body. It's a risky move\n"
+    "that puts everything on the line.");
+
+const u8 gMrRimePokedexText[] = _(
+    "It's highly skilled at tap-dancing. It\n"
+    "waves its psychic imbued cane in time\n"
+    "with its graceful movements.");
+
+const u8 gOverqwilPokedexText[] = _(
+    "Its lancelike spikes and savage\n"
+    "temperament have earned it the\n"
+    "nickname “Sea Fiend”.\n"
+    "It slurps up poison to nourish itself.");
+
+const u8 gObstagoonPokedexText[] = _(
+    "Its voice is staggering in volume.\n"
+    "Obstagoon has a tendency to take on a\n"
+    "threatening posture and shout--this move\n"
+    "is known as Obstruct.");

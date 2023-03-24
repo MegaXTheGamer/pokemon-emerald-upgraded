@@ -448,6 +448,15 @@ const u8 *const gMonFootprintTable[] =
     [SPECIES_MANTYKE] = gMonFootprint_Mantyke,
     [SPECIES_MIME_JR] = gMonFootprint_Mimejr,
     [SPECIES_MUNCHLAX] = gMonFootprint_Munchlax,
+    [SPECIES_ROSERADE] = gMonFootprint_Roserade,
+    [SPECIES_ANNIHILAPE] = gMonFootprint_Annihilape,
+    [SPECIES_DUDUNSPARCE_TWO] = gMonFootprint_Dudunsparce_Two,
+    [SPECIES_DUDUNSPARCE_THREE] = gMonFootprint_Dudunsparce_Three,
+    [SPECIES_CLODSIRE] = gMonFootprint_Clodsire,
+    [SPECIES_MR_RIME] = gMonFootprint_Mr_Rime,
+    [SPECIES_OVERQWIL] = gMonFootprint_Overqwil,
+    [SPECIES_OBSTAGOON] = gMonFootprint_Obstagoon,
+
 
     [SPECIES_EGG] = gMonFootprint_Bulbasaur,
 };
