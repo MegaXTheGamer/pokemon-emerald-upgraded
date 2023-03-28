@@ -1608,7 +1608,7 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
 {
     s32 i = 0;
     u8 flags = 0;
-    u8 type1 = gSpeciesInfo[targetSpecies].types[0], type2 = gSpeciesInfo[targetSpecies].types[1];
+    u8 type1 = GetTypeBySpecies(targetSpecies, 1), type2 = GetTypeBySpecies(targetSpecies, 2);
     u8 moveType;
 
     if (move == MOVE_STRUGGLE)
@@ -3318,6 +3318,29 @@ static void Cmd_getexp(void)
             calculatedExp = gSpeciesInfo[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
 
             if (gSaveBlock2Ptr->expShare) // exp share is turned on
+            //tx_randomizer_and_challenges
+            if (gSaveBlock1Ptr->tx_Challenges_ExpMultiplier != 0)
+            {
+                if (TX_EXP_MULTIPLER_ONLY_ON_NUZLOCKE_AND_RANDOMIZER) //special for Jaizu
+                {
+                    if (IsNuzlockeActive() || IsRandomizerActivated())
+                    {
+                        if (gSaveBlock1Ptr->tx_Challenges_ExpMultiplier == 3)
+                            calculatedExp = 0;
+                        else
+                            calculatedExp *= 1 + 0.5 * gSaveBlock1Ptr->tx_Challenges_ExpMultiplier;
+                    }
+                }
+                else
+                {
+                    if (gSaveBlock1Ptr->tx_Challenges_ExpMultiplier == 3)
+                        calculatedExp = 0;
+                    else
+                        calculatedExp *= 1 + 0.5 * gSaveBlock1Ptr->tx_Challenges_ExpMultiplier;
+                }
+            }
+
+            if (viaExpShare) // at least one mon is getting exp via exp share
             {
                 *exp = SAFE_DIV(calculatedExp / 2, viaSentIn);
                 if (*exp == 0)
@@ -4645,8 +4668,8 @@ static void Cmd_switchindataupdate(void)
     for (i = 0; i < sizeof(struct BattlePokemon); i++)
         monData[i] = gBattleBufferB[gActiveBattler][4 + i];
 
-    gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[0];
-    gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[1];
+    gBattleMons[gActiveBattler].type1 = GetTypeBySpecies(gBattleMons[gActiveBattler].species, 1);
+    gBattleMons[gActiveBattler].type2 = GetTypeBySpecies(gBattleMons[gActiveBattler].species, 2);
     gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
     // check knocked off item
@@ -8980,10 +9003,22 @@ static void Cmd_trydobeatup(void)
 
             gBattlescriptCurrInstr += 9;
 
-            gBattleMoveDamage = gSpeciesInfo[GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES)].baseAttack;
+            if (gSaveBlock1Ptr->tx_Challenges_BaseStatEqualizer)
+            {
+                u16 baseStat[] = {10, 100, 255, 500};
+                gBattleMoveDamage = baseStat[gSaveBlock1Ptr->tx_Challenges_BaseStatEqualizer];
+            }
+            else
+                gBattleMoveDamage = gSpeciesInfo[GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES)].baseAttack;
             gBattleMoveDamage *= gBattleMoves[gCurrentMove].power;
             gBattleMoveDamage *= (GetMonData(&party[gBattleCommunication[0]], MON_DATA_LEVEL) * 2 / 5 + 2);
-            gBattleMoveDamage /= gSpeciesInfo[gBattleMons[gBattlerTarget].species].baseDefense;
+            if (gSaveBlock1Ptr->tx_Challenges_BaseStatEqualizer)
+            {
+                u16 baseStat[] = {10, 100, 255, 500};
+                gBattleMoveDamage /= baseStat[gSaveBlock1Ptr->tx_Challenges_BaseStatEqualizer];
+            }
+            else
+                gBattleMoveDamage /= gSpeciesInfo[gBattleMons[gBattlerTarget].species].baseDefense;
             gBattleMoveDamage = (gBattleMoveDamage / 50) + 2;
             if (gProtectStructs[gBattlerAttacker].helpingHand)
                 gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
@@ -9660,9 +9695,9 @@ static void Cmd_pickup(void)
             heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
 
             if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
-                ability = gSpeciesInfo[species].abilities[1];
+                ability = GetAbilityBySpecies(species, 1);
             else
-                ability = gSpeciesInfo[species].abilities[0];
+                ability = GetAbilityBySpecies(species, 0);
 
             if (ability == ABILITY_PICKUP
                 && species != SPECIES_NONE
@@ -9683,9 +9718,9 @@ static void Cmd_pickup(void)
             heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
 
             if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
-                ability = gSpeciesInfo[species].abilities[1];
+                ability = GetAbilityBySpecies(species, 1);
             else
-                ability = gSpeciesInfo[species].abilities[0];
+                ability = GetAbilityBySpecies(species, 0);
 
             if (ability == ABILITY_PICKUP
                 && species != SPECIES_NONE
@@ -10148,16 +10183,30 @@ void BattleDestroyYesNoCursorAt(u8 cursorPosition)
 
 static void Cmd_trygivecaughtmonnick(void)
 {
+    u8 typeChallenge = gSaveBlock1Ptr->tx_Challenges_OneTypeChallenge;
+
     switch (gBattleCommunication[MULTIUSE_STATE])
     {
     case 0:
         HandleBattleWindow(YESNOBOX_X_Y, 0);
-        BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
-        gBattleCommunication[MULTIUSE_STATE]++;
-        gBattleCommunication[CURSOR_POSITION] = 0;
-        BattleCreateYesNoCursorAt(0);
+
+        if (IsNuzlockeNicknamingActive())
+        {
+            gBattleCommunication[MULTIUSE_STATE]++;
+            BeginFastPaletteFade(3);
+        }
+        else
+        {
+            BattlePutTextOnWindow(gText_BattleYesNoChoice, B_WIN_YESNO);
+            gBattleCommunication[MULTIUSE_STATE]++;
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
         break;
     case 1:
+        if (IsNuzlockeNicknamingActive())
+            gBattleCommunication[MULTIUSE_STATE]++;
+
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
         {
             PlaySE(SE_SELECT);

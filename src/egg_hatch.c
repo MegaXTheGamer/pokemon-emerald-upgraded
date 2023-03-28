@@ -679,7 +679,8 @@ static void CB2_EggHatch(void)
         if (!IsTextPrinterActive(sEggHatchData->windowId))
         {
             LoadUserWindowBorderGfx(sEggHatchData->windowId, 0x140, BG_PLTT_ID(14));
-            CreateYesNoMenu(&sYesNoWinTemplate, 0x140, 0xE, 0);
+            if (!IsNuzlockeNicknamingActive()) //tx_randomizer_and_challenges
+                CreateYesNoMenu(&sYesNoWinTemplate, 0x140, 0xE, 0);
             sEggHatchData->state++;
         }
         break;

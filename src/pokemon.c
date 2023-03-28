@@ -2471,7 +2471,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
     }
 
-    if (gSpeciesInfo[species].abilities[1])
+    if (GetAbilityBySpecies(species, 1) != ABILITY_NONE)
     {
         value = personality & 1;
         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
@@ -3027,6 +3027,22 @@ void CalculateMonStats(struct Pokemon *mon)
     else
     {
         s32 n = 2 * gSpeciesInfo[species].baseHP + hpIV;
+        switch(gSaveBlock1Ptr->tx_Challenges_BaseStatEqualizer)
+        {
+        case 0:
+            break;
+        case 1: 
+            n = 2 * 100 + hpIV;
+            break;
+        case 2: 
+            n = 2 * 255 + hpIV;
+            break;
+        case 3: 
+            n = 2 * 500 + hpIV;
+            break;
+        default:
+            break;
+        }
         newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
     }
 
@@ -4683,6 +4699,15 @@ u8 GetMonsStateToDoubles_2(void)
 
 u8 GetAbilityBySpecies(u16 species, u8 abilityNum)
 {
+    if (gSaveBlock1Ptr->tx_Random_Abilities) //tx_randomizer_and_challenges
+    {
+        species = GetSpeciesRandomSeeded(species, TX_RANDOM_T_ABILITY, 0);
+        if (gSpeciesInfo[species].abilities[1] == ABILITY_NONE)
+            abilityNum = 0;
+        else
+            abilityNum = 1;
+    }
+
     if (abilityNum)
         gLastUsedAbility = gSpeciesInfo[species].abilities[1];
     else
@@ -4840,8 +4865,8 @@ void CopyPlayerPartyMonToBattleData(u8 battlerId, u8 partyIndex)
     gBattleMons[battlerId].isEgg = GetMonData(&gPlayerParty[partyIndex], MON_DATA_IS_EGG, NULL);
     gBattleMons[battlerId].abilityNum = GetMonData(&gPlayerParty[partyIndex], MON_DATA_ABILITY_NUM, NULL);
     gBattleMons[battlerId].otId = GetMonData(&gPlayerParty[partyIndex], MON_DATA_OT_ID, NULL);
-    gBattleMons[battlerId].type1 = gSpeciesInfo[gBattleMons[battlerId].species].types[0];
-    gBattleMons[battlerId].type2 = gSpeciesInfo[gBattleMons[battlerId].species].types[1];
+    gBattleMons[battlerId].type1 = GetTypeBySpecies(gBattleMons[battlerId].species, 1);
+    gBattleMons[battlerId].type2 = GetTypeBySpecies(gBattleMons[battlerId].species, 2);
     gBattleMons[battlerId].ability = GetAbilityBySpecies(gBattleMons[battlerId].species, gBattleMons[battlerId].abilityNum);
     GetMonData(&gPlayerParty[partyIndex], MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(gBattleMons[battlerId].nickname, nickname);
@@ -6354,12 +6379,12 @@ bool8 TryIncrementMonLevel(struct Pokemon *mon)
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 nextLevel = GetMonData(mon, MON_DATA_LEVEL, 0) + 1;
     u32 expPoints = GetMonData(mon, MON_DATA_EXP, 0);
-    if (expPoints > gExperienceTables[gSpeciesInfo[species].growthRate][MAX_LEVEL])
+    if (expPoints > gExperienceTables[gSpeciesInfo[species].growthRate][GetCurrentPartyLevelCap()])
     {
-        expPoints = gExperienceTables[gSpeciesInfo[species].growthRate][MAX_LEVEL];
+        expPoints = gExperienceTables[gSpeciesInfo[species].growthRate][GetCurrentPartyLevelCap()];
         SetMonData(mon, MON_DATA_EXP, &expPoints);
     }
-    if (nextLevel > MAX_LEVEL || expPoints < gExperienceTables[gSpeciesInfo[species].growthRate][nextLevel])
+    if (nextLevel > GetCurrentPartyLevelCap() || expPoints < gExperienceTables[gSpeciesInfo[species].growthRate][nextLevel])
     {
         return FALSE;
     }
@@ -7281,4 +7306,283 @@ u8 *MonSpritesGfxManager_GetSpritePtr(u8 managerId, u8 spriteNum)
 
         return gfx->spritePointers[spriteNum];
     }
+}
+
+//******************* tx_randomizer_and_challenges
+void RandomizeTypeEffectivenessListEWRAM(u16 seed)
+{
+    u8 i;
+    u8 stemp[RANDOM_TYPE_COUNT];
+
+    memcpy(stemp, sOneTypeChallengeValidTypes, sizeof(sOneTypeChallengeValidTypes));
+    ShuffleListU8(stemp, NELEMS(sOneTypeChallengeValidTypes), seed);
+
+    sTypeEffectivenessList[TYPE_MYSTERY] = TYPE_MYSTERY;
+    for (i=0; i<NUMBER_OF_MON_TYPES; i++)
+    {
+        if (i != TYPE_MYSTERY)
+            sTypeEffectivenessList[i] = stemp[i];
+        
+        #ifndef NDEBUG
+            MgbaPrintf(MGBA_LOG_DEBUG, "sTypeEffectivenessList[%d]: %S => %S", i, gTypeNames[i], gTypeNames[sTypeEffectivenessList[i]] );
+        #endif
+    }
+    #ifndef NDEBUG
+        MgbaPrintf(MGBA_LOG_DEBUG, "**** sTypeEffectivenessList[%d] generated ****", NELEMS(sTypeEffectivenessList));
+        MgbaPrintf(MGBA_LOG_DEBUG, "");
+    #endif
+}
+u8 GetTypeEffectivenessRandom(u8 type)
+{
+    if (type == TYPE_NONE)
+        return TYPE_NONE;
+    
+    if (!gSaveBlock1Ptr->tx_Random_TypeEffectiveness)
+        return type;
+
+    return sTypeEffectivenessList[type];
+}
+u16 PickRandomStarterForOneTypeChallenge(u16 *speciesList, u8 starterId)
+{
+    u16 i, species;
+    u8 typeChallenge = gSaveBlock1Ptr->tx_Challenges_OneTypeChallenge;
+
+    #ifndef NDEBUG
+        MgbaPrintf(MGBA_LOG_DEBUG, "PickRandomStarterForOneTypeChallenge(starterId=%d)", starterId);
+    #endif
+
+    if ((IsRandomizerActivated() && gSaveBlock1Ptr->tx_Random_Similar) || !IsRandomizerActivated())
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpeciesEvo0));
+        DmaCopy16(3, sRandomSpeciesEvo0, stemp, sizeof(sRandomSpeciesEvo0));
+        ShuffleListU16(stemp, RANDOM_SPECIES_EVO_0_COUNT, (starterId+13)*12289);
+        for (i=0; i<RANDOM_SPECIES_EVO_0_COUNT; i++)
+        {
+            species = stemp[i];
+            if ((GetTypeBySpecies(species, 1) == typeChallenge || GetTypeBySpecies(species, 2) == typeChallenge) 
+                && species != speciesList[0] && species != speciesList[1] && species != speciesList[2])
+                break;
+        }
+
+        if (i == RANDOM_SPECIES_EVO_0_COUNT)
+            species = speciesList[1];
+
+        Free(stemp);
+    }
+    else if (gSaveBlock1Ptr->tx_Random_IncludeLegendaries)
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpeciesLegendary));
+        DmaCopy16(3, sRandomSpeciesLegendary, stemp, sizeof(sRandomSpeciesLegendary));
+        ShuffleListU16(stemp, RANDOM_SPECIES_COUNT_LEGENDARY, (starterId+13)*12289);
+        for (i=0; i<RANDOM_SPECIES_COUNT_LEGENDARY; i++)
+        {
+            species = stemp[i];
+            if ((GetTypeBySpecies(species, 1) == typeChallenge || GetTypeBySpecies(species, 2) == typeChallenge) 
+                && species != speciesList[0] && species != speciesList[1] && species != speciesList[2])
+                break;
+        }
+
+        if (i == RANDOM_SPECIES_COUNT_LEGENDARY)
+            species = speciesList[1];
+
+        Free(stemp);
+    }
+    else
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpecies));
+        DmaCopy16(3, sRandomSpecies, stemp, sizeof(sRandomSpecies));
+        ShuffleListU16(stemp, RANDOM_SPECIES_COUNT, (starterId+13)*12289);
+        for (i=0; i<RANDOM_SPECIES_COUNT; i++)
+        {
+            species = stemp[i];
+            if ((GetTypeBySpecies(species, 1) == typeChallenge || GetTypeBySpecies(species, 2) == typeChallenge) 
+                && species != speciesList[0] && species != speciesList[1] && species != speciesList[2])
+                break;
+        }
+
+        if (i == RANDOM_SPECIES_COUNT)
+            species = speciesList[1];
+
+        Free(stemp);
+    }
+
+    #ifndef NDEBUG
+        MgbaPrintf(MGBA_LOG_DEBUG, "starterId=%d; species=%d; iterations=%d", starterId, species, i);
+    #endif
+
+    return species;
+}
+
+//******* non EWRAM functions
+u16 PickRandomStarter(u16 *speciesList, u8 starterId)
+{
+    u16 species;
+    if (gSaveBlock1Ptr->tx_Random_Chaos)
+        return sRandomSpeciesLegendary[RandomSeededModulo(species, RANDOM_SPECIES_COUNT_LEGENDARY)];
+    
+    if (gSaveBlock1Ptr->tx_Random_Similar)
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpeciesEvo0));
+        DmaCopy16(3, sRandomSpeciesEvo0, stemp, sizeof(sRandomSpeciesEvo0));
+        ShuffleListU16(stemp, RANDOM_SPECIES_EVO_0_COUNT, 12289);
+        species = stemp[starterId*27];
+        Free(stemp);
+        return species;
+    }
+    else if (gSaveBlock1Ptr->tx_Random_IncludeLegendaries)
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpeciesLegendary));
+        DmaCopy16(3, sRandomSpeciesLegendary, stemp, sizeof(sRandomSpeciesLegendary));
+        ShuffleListU16(stemp, RANDOM_SPECIES_COUNT_LEGENDARY, 12289);
+        species = stemp[starterId*27];
+        Free(stemp);
+        return species;
+    }
+    else
+    {
+        u16 *stemp = Alloc(sizeof(sRandomSpecies));
+        DmaCopy16(3, sRandomSpecies, stemp, sizeof(sRandomSpecies));
+        ShuffleListU16(stemp, RANDOM_SPECIES_COUNT, 12289);
+        species = stemp[starterId*27];
+        Free(stemp);
+        return species;  
+    } 
+}
+
+u8 GetTypeBySpecies(u16 species, u8 typeNum)
+{
+    u8 type;
+
+    if (typeNum == 1)
+        type = gSpeciesInfo[species].types[0];
+    else
+        type = gSpeciesInfo[species].types[1];
+
+    if (!gSaveBlock1Ptr->tx_Random_Type)
+        return type;
+
+    type = sOneTypeChallengeValidTypes[RandomSeededModulo(type + typeNum + species, NUMBER_OF_MON_TYPES-1)];
+
+    #ifndef NDEBUG
+    if (gSaveBlock1Ptr->tx_Random_Type)
+        MgbaPrintf(MGBA_LOG_DEBUG, "TX RANDOM TYPE%d: species=%d=%S; type=%d=%S", typeNum, species, gSpeciesNames[species], type, gTypeNames[type]);
+    #endif
+
+    return type;
+}
+
+static u16 GetRandomSpecies(u16 species, u8 mapBased, u8 type, u16 additionalOffset) //INTERNAL use only!
+{
+    u8 slot, slotNew;
+    u16 mapOffset = 0; //12289, 49157
+    if (mapBased)
+        mapOffset = NuzlockeGetCurrentRegionMapSectionId();
+
+
+    if (gSaveBlock1Ptr->tx_Random_Similar)
+    {
+        u16 speciesResult;
+        slot = gSpeciesMapping[species];
+
+        switch (slot)
+        {
+        case EVO_TYPE_0:
+            speciesResult = sRandomSpeciesEvo0[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_EVO_0_COUNT)];
+            break;
+        case EVO_TYPE_1:
+            speciesResult = sRandomSpeciesEvo1[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_EVO_1_COUNT)];
+            break;
+        case EVO_TYPE_2:
+            speciesResult = sRandomSpeciesEvo2[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_EVO_2_COUNT)];
+            break;
+        case EVO_TYPE_LEGENDARY:
+            speciesResult = sRandomSpeciesEvoLegendary[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_EVO_LEGENDARY_COUNT)];
+            break;
+        }
+
+        #ifndef NDEBUG
+        slotNew = gSpeciesMapping[speciesResult];
+        MgbaPrintf(MGBA_LOG_DEBUG, "%S: species=%d=%S; mapBased=%d; speciesResult=%d=%S; %S-->>%S", gRandomizationTypes[type], species, gSpeciesNames[species], mapBased, speciesResult, gSpeciesNames[speciesResult], gEvoStages[slot], gEvoStages[slotNew]);
+        #endif
+
+        return speciesResult;
+    }
+
+    if (gSaveBlock1Ptr->tx_Random_IncludeLegendaries)
+        return sRandomSpeciesLegendary[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_COUNT_LEGENDARY)];
+
+    return sRandomSpecies[RandomSeededModulo(species + mapOffset + additionalOffset, RANDOM_SPECIES_COUNT)];
+}
+u16 GetSpeciesRandomSeeded(u16 species, u8 type, u16 additionalOffset)
+{
+    u8 slot, slotNew;
+    u16 speciesResult = species;
+    u8 mapBased = FALSE;
+
+    //CHAOS
+    if (gSaveBlock1Ptr->tx_Random_Chaos)
+        return sRandomSpeciesLegendary[RandomSeededModulo(species, RANDOM_SPECIES_COUNT_LEGENDARY)];
+
+    //if EVO_TYPE is SELF or LEGENDARY and !tx_Random_IncludeLegendaries
+    slot = gSpeciesMapping[species];
+    if (slot == EVO_TYPE_SELF || (slot == EVO_TYPE_LEGENDARY && !gSaveBlock1Ptr->tx_Random_IncludeLegendaries))
+        return species;
+
+    //generate species based on the type
+    //different types have different parameters, e.g. abilities are never mapBased
+    switch(type)
+    {
+    case TX_RANDOM_T_WILD_POKEMON:
+        mapBased = gSaveBlock1Ptr->tx_Random_MapBased;
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    case TX_RANDOM_T_TRAINER:
+        mapBased = gSaveBlock1Ptr->tx_Random_MapBased;
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    case TX_RANDOM_T_MOVES:
+        speciesResult = sRandomSpeciesLegendary[RandomSeededModulo(species, RANDOM_SPECIES_COUNT_LEGENDARY)];
+        break;
+    case TX_RANDOM_T_ABILITY:
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    case TX_RANDOM_T_EVO:
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    case TX_RANDOM_T_EVO_METH:
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    case TX_RANDOM_T_STATIC:
+        speciesResult = GetRandomSpecies(species, mapBased, type, additionalOffset);
+        break;
+    }
+
+    return speciesResult;
+}
+
+u16 GetRandomMove(u16 move, u16 species)
+{
+    u16 val = RandomSeededModulo(move + species, RANDOM_MOVES_COUNT);
+    u16 final = sRandomValidMoves[val];
+    
+    #ifndef NDEBUG
+        MgbaPrintf(MGBA_LOG_DEBUG, "TX RANDOM MOVE     : GetRandomMove: move=%d=%S, species=%d; combined=%d; val=%d; final=%d=%S", move,  gMoveNames[move], species, move + species, val, final, gMoveNames[final]);
+    #endif
+
+    return final;
+}
+
+u8 GetRandomType(void)
+{
+    return sOneTypeChallengeValidTypes[RandomSeededModulo(12289, NUMBER_OF_MON_TYPES-1)];
+}
+
+// Challenges
+u8 EvolutionBlockedByEvoLimit(u16 species)
+{
+    u8 slot = gSpeciesMapping[species];
+    if (slot == EVO_TYPE_1 && gSaveBlock1Ptr->tx_Challenges_EvoLimit == 1) //No Evos already previously checked
+        return TRUE;
+
+    return FALSE;
 }

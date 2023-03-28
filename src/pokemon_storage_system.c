@@ -3985,6 +3985,18 @@ static void LoadDisplayMonGfx(u16 species, u32 pid)
         LZ77UnCompWram(sStorage->displayMonPalette, sStorage->displayMonPalBuffer);
         CpuCopy32(sStorage->tileBuffer, sStorage->displayMonTilePtr, MON_PIC_SIZE);
         LoadPalette(sStorage->displayMonPalBuffer, sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
+        if (sStorage->displayMonNuzlockeRibbon)
+        {
+            if (TX_NUZLOCKE_CEMETERY_ICON_GRAY)
+            {
+                TintPalette_GrayScale2(&gPlttBufferUnfaded[sStorage->displayMonPalOffset], PLTT_SIZE_4BPP);
+                TintPalette_GrayScale2(&gPlttBufferFaded[sStorage->displayMonPalOffset], PLTT_SIZE_4BPP);
+            }
+            else
+                sStorage->displayMonSprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        }
+        else
+            sStorage->displayMonSprite->oam.objMode = ST_OAM_OBJ_NORMAL;
         sStorage->displayMonSprite->invisible = FALSE;
     }
     else
