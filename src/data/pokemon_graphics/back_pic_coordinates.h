@@ -458,7 +458,7 @@ const struct MonCoords gMonBackPicCoords[] =
     [SPECIES_DUDUNSPARCE_THREE]            = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  8 },
     [SPECIES_CLODSIRE]                     = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  10 },
     [SPECIES_MR_RIME]                      = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  6 },
-    [SPECIES_OVERQWIL]                     = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  10},
+    [SPECIES_OVERQWIL]                     = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  10 },
     [SPECIES_OBSTAGOON]                    = { .size = MON_COORDS_SIZE(64, 64), .y_offset =  8 },
     [SPECIES_EGG]         = { .size = MON_COORDS_SIZE(24, 48), .y_offset = 10 },
     [SPECIES_UNOWN_B]     = { .size = MON_COORDS_SIZE(40, 48), .y_offset =  9 },

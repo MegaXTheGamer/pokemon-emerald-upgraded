@@ -43,6 +43,9 @@
 #include "constants/items.h"
 #include "constants/songs.h"
 
+#include "tx_randomizer_and_challenges.h"
+#include "battle_setup.h" //tx_randomizer_and_challenges
+
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
 static void Task_CallItemUseOnFieldCallback(u8);
@@ -138,7 +141,7 @@ static void Task_CallItemUseOnFieldCallback(u8 taskId)
         sItemUseOnFieldCB(taskId);
 }
 
-static void DisplayCannotUseItemMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField, const u8 *str)
+void DisplayCannotUseItemMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField, const u8 *str) //static //tx_randomizer_and_challenges
 {
     StringExpandPlaceholders(gStringVar4, str);
     if (!isUsingRegisteredKeyItemOnField)
@@ -964,15 +967,15 @@ void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
 
 void ItemUseInBattle_PokeBall(u8 taskId)
 {
-#if TX_DEBUG_SYSTEM_ENABLE == TRUE
-    if (FlagGet(FLAG_SYS_NO_CATCHING)){
-        static const u8 sText_BallsCannotBeUsed[] = _("Poké Balls cannot be used\nright now!\p");
-        DisplayItemMessage(taskId, 1, sText_BallsCannotBeUsed, CloseItemMessage);
-        return;
-    }
-#endif
-
-    if (IsPlayerPartyAndPokemonStorageFull() == FALSE) // have room for mon?
+    if (NuzlockeIsCaptureBlocked) //tx_randomizer_and_challenges
+        DisplayCannotUseItemMessage(taskId, FALSE, gText_NuzlockeCantThrowPokeBallRoute);
+    else if (NuzlockeIsSpeciesClauseActive == 2) //already have THIS_mon
+        DisplayCannotUseItemMessage(taskId, FALSE, gText_NuzlockeCantThrowPokeBallAlreadyCaught);
+    else if (OneTypeChallengeCaptureBlocked) //pkmn not of the TYPE CHALLENGE type
+        DisplayCannotUseItemMessage(taskId, FALSE, gText_OneTypeChallengeCantThrowPokeBall);
+    else if (NuzlockeIsSpeciesClauseActive)
+        DisplayCannotUseItemMessage(taskId, FALSE, gText_NuzlockeCantThrowPokeBallSpeciesClause);
+    else if (IsPlayerPartyAndPokemonStorageFull() == FALSE) // have room for mon?
     {
         RemoveBagItem(gSpecialVar_ItemId, 1);
         if (!InBattlePyramid())

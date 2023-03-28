@@ -40,6 +40,7 @@ struct Main
     /*0x439*/ u8 anyLinkBattlerHasFrontierPass:1;
 };
 
+
 #define GAME_CODE_LENGTH 4
 extern const u8 gGameVersion;
 extern const u8 gGameLanguage;

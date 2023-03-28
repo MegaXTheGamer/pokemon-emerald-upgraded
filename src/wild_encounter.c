@@ -21,6 +21,7 @@
 #include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/weather.h"
+#include "tx_randomizer_and_challenges.h"
 
 extern const u8 EventScript_RepelWoreOff[];
 
@@ -928,7 +929,7 @@ static bool8 TryGetRandomWildMonIndexByType(const struct WildPokemon *wildMon, u
 
     for (validMonCount = 0, i = 0; i < numMon; i++)
     {
-        if (GetTypeBySpecies(wildMon[i].species, 1) == type || GetTypeBySpecies(wildMon[i].species, 2) == type)
+        if (gSpeciesInfo[wildMon[i].species].types[0] == type || gSpeciesInfo[wildMon[i].species].types[1] == type)
             validIndexes[validMonCount++] = i;
     }
 

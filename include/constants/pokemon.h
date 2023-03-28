@@ -191,9 +191,6 @@
 #define FRIENDSHIP_200_TO_254  5
 #define FRIENDSHIP_MAX         6
 
-// Friendship value that the majority of species use. This was changed in Generation 8 to 50.
-#define STANDARD_FRIENDSHIP 70
-
 #define MAX_FRIENDSHIP  255
 #define MAX_SHEEN       255
 #define MAX_CONDITION   255
@@ -252,7 +249,9 @@
 #define EVO_LEVEL_SHEDINJA   14 // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           15 // Pokémon levels up with beauty ≥ specified value
 
+//tx_randomizer_and_challenges
 #define EVOS_PER_MON 10
+#define EVOS_PER_LINE 22
 
 // Evolution 'modes,' for GetEvolutionTargetSpecies
 #define EVO_MODE_NORMAL     0

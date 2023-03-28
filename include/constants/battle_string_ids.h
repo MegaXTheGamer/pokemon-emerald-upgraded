@@ -384,8 +384,13 @@
 #define STRINGID_STEADFASTRAISEDATK         384
 #define STRINGID_MOXIERAISEDATK             385
 #define STRINGID_HURTBYITEM                 386
+//tx_randomizer_and_challenges
+#define STRINGID_ONETYPECAPTUREBLOCKED      387
+#define STRINGID_NUZLOCKECAPTUREBLOCKED     388
+#define STRINGID_SPECIESCLAUSECAPTUREBLOCKED 389
+#define STRINGID_SAMESPECIESCAPTUREBLOCKED  390
 
-#define BATTLESTRINGS_COUNT                 387
+#define BATTLESTRINGS_COUNT                 391
 
 // This is the string id that gBattleStringsTable starts with.
 // String ids before this (e.g. STRINGID_INTROMSG) are not in the table,

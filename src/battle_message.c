@@ -897,6 +897,10 @@ const u8 * const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_S
     [STRINGID_STEADFASTRAISEDATK - BATTLESTRINGS_TABLE_START] = sText_SteadfastRaisedAtk,
     [STRINGID_MOXIERAISEDATK - BATTLESTRINGS_TABLE_START] = sText_MoxieRaisedAtk,
     [STRINGID_HURTBYITEM - BATTLESTRINGS_TABLE_START] = sText_HurtByItem,
+    [STRINGID_ONETYPECAPTUREBLOCKED - BATTLESTRINGS_TABLE_START] = gText_OneTypeChallengeCantThrowPokeBall,
+    [STRINGID_NUZLOCKECAPTUREBLOCKED - BATTLESTRINGS_TABLE_START] = gText_NuzlockeCantThrowPokeBallRoute,
+    [STRINGID_SPECIESCLAUSECAPTUREBLOCKED - BATTLESTRINGS_TABLE_START] = gText_NuzlockeCantThrowPokeBallSpeciesClause,
+    [STRINGID_SAMESPECIESCAPTUREBLOCKED - BATTLESTRINGS_TABLE_START] = gText_NuzlockeCantThrowPokeBallAlreadyCaught,
 };
 
 const u16 gMissStringIds[] =
@@ -2081,7 +2085,7 @@ void BufferStringBattle(u16 stringID)
     case STRINGID_INTROSENDOUT: // poke first send-out
         if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && IsValidForBattle(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler ^ BIT_FLANK]]))
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
                     stringPtr = sText_InGamePartnerSentOutZGoN;
