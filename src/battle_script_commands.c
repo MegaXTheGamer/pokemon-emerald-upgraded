@@ -3339,7 +3339,20 @@ static void Cmd_getexp(void)
                         calculatedExp *= 1 + 0.5 * gSaveBlock1Ptr->tx_Challenges_ExpMultiplier;
                 }
             }
+
+                *exp = SAFE_DIV(calculatedExp / 2, viaSentIn);
+                if (*exp == 0)
+                    *exp = 1;
+
+                gExpShareExp = calculatedExp / 2;
+                if (gExpShareExp == 0)
+                    gExpShareExp = 1;
+
+            gBattleScripting.getexpState++;
+            gBattleStruct->expGetterMonId = 0;
+            gBattleStruct->sentInPokes = sentIn;
         }
+
         // fall through
     case 2: // set exp value to the poke in expgetter_id and print message
         if (gBattleControllerExecFlags == 0)
