@@ -1174,7 +1174,7 @@ const struct Item gItems[] =
     {
         .name = _("MOON STONE"),
         .itemId = ITEM_MOON_STONE,
-        .price = 0,
+        .price = 2100,
         .description = sMoonStoneDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -2329,7 +2329,7 @@ const struct Item gItems[] =
     {
         .name = _("KING'S ROCK"),
         .itemId = ITEM_KINGS_ROCK,
-        .price = 100,
+        .price = 2100,
         .holdEffect = HOLD_EFFECT_FLINCH,
         .holdEffectParam = 10,
         .description = sKingsRockDesc,
@@ -2477,7 +2477,7 @@ const struct Item gItems[] =
     {
         .name = _("METAL COAT"),
         .itemId = ITEM_METAL_COAT,
-        .price = 100,
+        .price = 2100,
         .holdEffect = HOLD_EFFECT_STEEL_POWER,
         .holdEffectParam = 10,
         .description = sMetalCoatDesc,
@@ -4677,7 +4677,7 @@ const struct Item gItems[] =
     {
         .name = _("AURORATICKET"),
         .itemId = ITEM_AURORA_TICKET,
-        .price = 0,
+        .price = 65000,
         .description = sAuroraTicketDesc,
         .importance = 1,
         .registrability = TRUE,
@@ -4744,7 +4744,7 @@ const struct Item gItems[] =
     {
         .name = _("OLD SEA MAP"),
         .itemId = ITEM_OLD_SEA_MAP,
-        .price = 0,
+        .price = 65000,
         .description = sOldSeaMapDesc,
         .importance = 1,
         .registrability = TRUE,
