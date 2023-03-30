@@ -60,6 +60,7 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "constants/weather.h"
+#include "tx_randomizer_and_challenges.h"
 
 
 #if TX_DEBUG_SYSTEM_ENABLE == TRUE

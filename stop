@@ -1,0 +1,65 @@
+[33mcommit 15e4fbe4c8fb089a62c9a67a47bdf9157deb8c05[m
+Author: MegaXTheGamer <126981023+MegaXTheGamer@users.noreply.github.com>
+Date:   Tue Mar 28 15:07:29 2023 -0700
+
+    Randomizer and Nuzlocke Mode Working
+
+[33mcommit 07eac35f93d85f4731f92545ed023afccf6b62cb[m
+Author: MegaXTheGamer <126981023+MegaXTheGamer@users.noreply.github.com>
+Date:   Sun Mar 12 21:19:42 2023 -0700
+
+    New Pokemon Info
+
+[33mcommit 347a02ace1f571a8aab355a9df2f3bf112d3cca7[m
+Author: GriffinR <griffin.g.richards@gmail.com>
+Date:   Fri Dec 9 12:34:55 2022 -0500
+
+    Sync trade
+
+[33mcommit 2d694a84e30d899da433f4300f48b8223d7cabf9[m
+Author: Eduardo Quezada <eduardo602002@gmail.com>
+Date:   Mon Dec 5 21:57:28 2022 -0300
+
+    Trying to fix remote reference
+
+[33mcommit 8a68596b6436a28fee13cc216aed290736b3156d[m
+Author: Eduardo Quezada <eduardo602002@gmail.com>
+Date:   Fri Sep 16 20:36:44 2022 -0300
+
+    Removed free macro
+
+[33mcommit 59818acc8104eac6ef9806df99c8a27f5c798005[m
+Author: TheXaman <48356183+TheXaman@users.noreply.github.com>
+Date:   Wed Sep 14 13:35:51 2022 +0200
+
+    backported the menu improvments from the rhh implementation:
+    -code cleanup
+    -better whitespaces
+    -reworked TX_DEBUGGING to TX_DEBUG_SYSTEM_ENABLE = TRUE
+    -removed menu flicker when changing
+    -object events frozen while in menu
+    -easier way to rebind debug keys
+
+[33mcommit 5515e328b2c44240d1bcc5656a3818b1b3b8343e[m
+Author: GriffinR <griffin.g.richards@gmail.com>
+Date:   Fri Aug 12 21:18:10 2022 -0400
+
+    Clean up lock/unlock anim movement
+
+[33mcommit d03756dfd29e245bd80d729f40dc4a4410af0ba7[m
+Author: sphericalice <sphericalice@outlook.com>
+Date:   Fri Jun 3 15:42:53 2022 +0100
+
+    Use the TRY_FREE_AND_SET_NULL macro where appropriate
+
+[33mcommit bb3992e7dca11b673548c7b19f74bf2f39bb9198[m
+Author: sphericalice <sphericalice@outlook.com>
+Date:   Fri Jun 3 15:12:58 2022 +0100
+
+    Use TRY_FREE_AND_SET_NULL macro for sFlyMap
+
+[33mcommit 19b9bf4128755ee36b2efe6a0b632ddc89e9ed71[m
+Author: TheXaman <48356183+TheXaman@users.noreply.github.com>
+Date:   Mon May 9 20:13:29 2022 +0200
+
+    fixed random starter and random oneType starter

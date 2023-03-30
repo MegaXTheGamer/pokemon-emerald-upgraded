@@ -64,6 +64,11 @@
 #include "tx_randomizer_and_challenges.h"
 #include "overworld.h"
 
+#ifdef GBA_PRINTF
+    #include "printf.h"
+    #include "mgba.h"
+#endif
+
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
 

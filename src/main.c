@@ -24,6 +24,7 @@
 #include "main.h"
 #include "trainer_hill.h"
 #include "constants/rgb.h"
+#include "mgba.h"
 
 extern void CB2_FlashNotDetectedScreen(void);
 
